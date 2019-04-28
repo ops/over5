@@ -1,0 +1,177 @@
+History for Over5 64binaries by Daniel Kahlin <tlr@stacken.kth.se>
+-----------------------------------------------------------------------------
+Copyright (c) 1995,1996 Daniel Kahlin <tlr@stacken.kth.se>
+
+DiskSlave:
+----------
+
+DiskSlave 0.348 (960428) tlr - Fifth release version.
+  - Added verify toggle.  Affects fastformat and trackturbo.
+  - pressing RESTORE now goes to the menu.
+  - 'X' exits to basic.
+  - writedisk without verify takes about 03:15
+  - did lots of compiles trying to design the startup screen.
+    failed to make it kool :(.
+
+DiskSlave 0.256 (960427) tlr - INTERNAL
+  - Wrote a new fastformat with verify!  This one should be perfectly
+    safe. takes 24 seconds (standard format is about 1:15)
+
+DiskSlave 0.237 (960423) tlr - INTERNAL
+  - found the bug that prevented pitchtrack to talk to devices
+    other than 8.
+
+DiskSlave 0.234 (960422) tlr - INTERNAL
+  - found the write bug in pitchtrack!  No more write failed!
+    writedisk is now 04:15 and readdisk is 02:30
+
+DiskSlave 0.232 (960422) tlr - INTERNAL
+  - did some bug fixes on pitchtrack
+  - remade the diskcode a bit
+  - cleaned up in zeropage usage
+
+DiskSlave 0.223 (960401) tlr - Fourth Release version.
+  - cosmetics.  Bumped revision for release.
+
+DiskSlave 0.221 (960322) tlr - INTERNAL
+  - better 'pitchtrack' works... (some problems still remain...)
+
+DiskSlave 0.219 (960320) tlr - INTERNAL
+  - new 'pitchtrack' (again) works...
+
+DiskSlave 0.215 (960319) tlr - INTERNAL
+  - included yet another version of 'pitchtrack'  does not work... :-(
+
+DiskSlave 0.209 (960311) tlr - INTERNAL
+  - recoded bl_block.asm a bit.
+
+DiskSlave 0.188 (951001) tlr - INTERNAL
+  - All turbocode was loopunrolled and is now page independant.
+
+DiskSlave 0.178 (950917) tlr - Third Release version.
+  - included new version of 'pitchtrack' by Per Andreas Andersson. 
+    write of zipped disk 6:30 total time, read disk 2:30 total time
+    (total time includes serial transfer <-> the Amiga)
+  - fixed error handling for readtrack and writetrack.
+
+DiskSlave 0.169 (950819) tlr - INTERNAL
+  - Coded timeout handling, works ok.
+
+DiskSlave 0.168 (950815) tlr - INTERNAL
+  - added fastformat. (20 seconds with verify)
+  - fixed Multitrack write.
+  - included 'pitchtrack' by Per Andreas Andersson. (fast track read/write)
+  - major bugfixes
+  - reorganization of code
+
+DiskSlave 0.136 (950812) tlr - INTERNAL
+  - added WRITETRACK and READTRACK, WRITESECTOR, READSECTOR skeleton
+
+DiskSlave 0.116 (950807) tlr - Second Release version
+  - changed some internal flags, reorganized source code
+
+DiskSlave 0.111 (950722) tlr - First Release version
+  - Fixed bug when sending long diskcommands/receiveing status
+  - inserted proper colours during status/command
+  - Proper errorcheck in Load/Save
+  - fixed sending of diskcommand
+
+DiskSlave 0.106 (950713) tlr
+  - New compact structure format!
+  - now considers device number correctly
+
+
+MemSlave & MemSlaveC800:
+------------------------
+MemSlave 0.84 (960511) tlr - Fifth release version.
+  - minor changes to source code.
+
+MemSlave 0.81 (960401) tlr - Fourth Release version.
+  - some changes in 'bl_Block.asm'
+  - bumped revison for release.
+
+MemSlave 0.78 (950819) tlr - Third Release version.
+  - Coded timeout handling, works ok.
+
+MemSlave 0.66 (950815) tlr - INTERNAL
+  - reorganized source code more.
+
+MemSlave 0.64 (950807) tlr - Second Release version.
+  - changed some internal flags, reorganized source code
+
+MemSlave 0.62 (950722) tlr - First Release version
+  - Now has both MemSlave and MemSlaveC800!
+  - Shows run at the top of the screen when 'RUN'
+
+MemSlave 0.50 (950713) tlr 
+  - New compact structure format!
+
+
+FastRS:
+-------
+FastRS 1.34 (960401) tlr - Fourth Release version
+  - Bumped revision for release.
+
+FastRS 1.33 (960123) tlr - INTERNAL
+  - 16KB VIC-20 support (NTSC not tested)
+
+FastRS 1.3  (950713) tlr - First Release version
+  - Works ok (NTSC not tested)
+
+
+
+SerFile:
+--------
+SerFile 0.136 (960511) tlr - Fifth release version.
+  - Fixed errors with using device 6
+
+SerFile 0.132 (960501) tlr - INTERNAL
+  - Optimized, and bugfixed code.
+  - When a serial error occurs, it now reports '?device not present'
+
+SerFile 0.118 (960116) tlr - Fourth Release version.
+  - changes in 'bl_Block.asm' to provide for '?device not present'
+    reporting.  Not finished though.
+
+SerFile 0.114 (950821) tlr - Third Release version.
+  - Did major rework of BASIC patch.
+    now patches ICRNCH vector instead of IGONE.
+  - added commands '.', '/' and '$'
+  - modified the string get routine to handle different
+    encapsulation characters. (currently '"' and '\0')
+  - Now does 'NEW' after installing.
+
+SerFile 0.100 (950819) tlr - INTERNAL
+  - Coded timeout handling, works ok.
+
+SerFile 0.99 (950816) tlr - INTERNAL
+  - Fixed bugs with empty readstring!
+
+SerFile 0.95 (950815) tlr - INTERNAL
+  - reorganized sourcecode
+
+SerFile 0.93 (950808) tlr - First Release version
+  - fixed some error codes
+  - added '#$', does the same as '#C"$"'
+  - made modifications to srvload protocol
+
+SerFile 0.88 (950807) tlr
+  - adapted the code to be able to run under kernal. (major work!)
+    now occupies $0334-$03b0 and $f600-$ffff
+  - modified parameter reading... does not trash memory just below
+    $a000.
+
+SerFile 0.74 (950806) tlr
+  - made #L, #S, #C, #K...
+
+SerFile 0.47 (950805) tlr
+  - coded srvsave
+  - coded patches for load and save
+
+SerFile 0.40 (950804) tlr
+  - ReadString works ok with multipage.
+  - srvload works ok
+  - no flashing during transfer
+
+SerFile 0.32 (950803) tlr
+  - ReadString works partly.

@@ -1,0 +1,28 @@
+
+Short description of a level converter:
+
+the userport of the c64 does not fully support RS232 voltages.
+
+        "real RS232"     c64
+
+mark     -12 volts     +5 volts
+space    +12 volts      0 volts
+
+The converter has to translate these voltages.  It also has to
+have a c64 userport connector in one end and a standard RS232 connector
+(DSUB-25) in the other.
+
+It does NOT have to support handshaking-lines (CTS/RTS), only datain/out
+(RxD, TxD).
+
+These level converters were commercially availible from serveral companies.
+Commodore has made one. (VIC-1011A RS232C)  In Sweden the 'Handic V24' was
+popular.  There also exists several schematics on this type of interface.
+
+All of them plugs into the userport, and are fairly simple. (consists of
+only a few components.)
+
+
+Happy computing...
+/Daniel Kahlin <tlr@stacken.kth.se>
+

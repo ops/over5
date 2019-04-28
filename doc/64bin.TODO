@@ -1,0 +1,40 @@
+TODO for Over5 64binaries by Daniel Kahlin <tlr@stacken.kth.se>
+-----------------------------------------------------------------------------
+Copyright (c) 1995,1996 Daniel Kahlin <tlr@stacken.kth.se>
+
+(1.0)
+- do real safe uninit in bl_block.asm
+- better protocolspecs
+
+(2.0)
+- Make drive talk/listen via c64 directly to the amiga(major work!!!!!!)
+- ZipDos
+- support for long files
+
+(misc)
+- program a cache system for drive code.  If drive code is already in drive... use it.
+
+- kill potential problem with readmessage using BASIC calls
+  in SerFile.
+
+- a copy safe on exit (copy program up under kernal)
+
+- code a neat-oh startup screen
+- try to fix problems with turbos like AR IV
+
+- special serfile kernal. (patch)
+
+- parallel support
+
+- fix init bug in cartridge!!!
+- serfile for cartridge
+- better monitor for cartride
+- fix memswitching in cartridge
+
+- improve disk handling
+- faster trackwrite
+- buffersize limit
+- optimizing of code
+- vic20 version
+- c128 version
+

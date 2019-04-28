@@ -1,0 +1,405 @@
+Documentation for Over5 0.711 by Daniel Kahlin <tlr@stacken.kth.se>
+-----------------------------------------------------------------------------
+Copyright (c) 1995,1996 Daniel Kahlin <tlr@stacken.kth.se>
+
+Distribution:
+
+  Over5 is FREEWARE (Freely-Distributable), but copyrighted by me. (NOT PD!) 
+None of the included files may be modified and/or removed.  Permission is
+given to freely distribute this program provided you include all files from
+the original archive, and no fee is charged in excess of reasonable media
+and mailing costs.  The program may not be used for commercial purposes
+without written permission from the author.
+
+
+Disclaimer:
+
+  I cannot in any way be held responsible for anything this program does.
+You are using it entirely at your own risk.  Every effort has been made to
+keep this program bug free.  But, IF for example a bug exists that blows up
+your entire computer, don't blame me.
+
+-----------------------------------------------------------------------------
+
+Over5 on the WWW: (contains the latest release)
+  http://www.stacken.kth.se/~tlr/computing/over5.html
+
+GENERAL:
+
+  Over5 (the successor to OverFour) is an AMIGA to/from C64 transfer program
+package.  It was made because of too many burnt 6526's and 8520's.  To
+overcome that problem I chose to use a standard RS-232 interface.
+
+Over5 contains several commands:  COPY, WRITEFILE, READFILE, WRITEMEM,
+  READMEM, SYS, RUN, RESET, SIMPLEWRITE, SIMPLEREAD, BOOT, DIR, STATUS,
+  COMMAND, WRITEDISK, READDISK, WRITEZIP, READZIP, TEST, SERVER, HELP.
+
+CONFIG FILE:
+------------
+  At startup Over5 tries to load the file 'PROGDIR:Over5.config'.
+Here is an example config containing the default values:
+
+--------------------
+
+;
+; over5.config
+; comment
+# comment
+;
+DEVICE=8	;cbm device number
+SERIALDEVICE=serial.device
+SERIALUNIT=0
+#
+# end of file
+#
+--------------------
+
+
+NUMBER INPUT:
+-------------
+  Most parameters which expects a number can be fed with different
+radixes.  The default radix for addresses is 16 (hex).  For device
+numbers the default is 10 (dec).
+
+prefixes:
+  '%'       binary  (ex: %11001)
+  '$','0x'  hexadecimal  (ex: $ef, 0xfce2)
+  '@'       octal (ex: @377)
+  '+', '#'  decimal (ex: +255, #16)
+
+(the prefix is ofcourse only necessary if the wanted radix differs from
+ the default radix.)
+
+
+
+THE COMMANDS:
+-------------
+
+
+command COPY:
+-------------
+
+TEMPLATE: Over5 COPY FROM/M,TO/A,DEBUG/S
+
+  FROM/M    source file/files 
+  TO/A      destination file/path
+  DEBUG/S   sets debug mode (shows all packets).
+
+copies source to destination (like AmigaDOS copy) but '<devnum>:'
+is the cbm drive. (ex. '8:','9:')
+Wildcards are fully supported.  Cbm filenames may end with ',<s|p|u|r>'
+which indicates SEQ/PRG/USR/REL files. (the default is ',p')  When
+wildcards are used with cbm files, only the filetype specified matches.
+
+examples:
+
+> Over5 COPY 8:a#?.src,s ram:
+will copy cbm files like 'APA.SRC' and 'AFFE.SRC' (SEQ) to 'ram:apa.src'
+and 'ram:affe.src'.
+
+> Over5 COPY work:c64/dl_demos/#?.tlr 8:
+will copy 'work:c64/dl_demos/neat-oh.tlr' to the cbm file 'NEAT-OH.TLR'
+(PRG).
+
+> Over5 COPY mysource.asm 8:,s
+will copy 'mysource.asm' to the cbm file 'MYSOURCE.ASM' (SEQ).
+
+> Over5 COPY #?(.asm|.i) 8:,u
+will copy files like 'one.asm' and 'two.i' to the cbm files 'ONE.ASM'
+(USR) and 'TWO.I' (USR).
+
+
+command WRITEFILE:
+------------------
+(this is a low level command, generally you should use 'COPY' instead)
+
+TEMPLATE: Over5 WRITEFILE FROM/A,TO/A,DEVICE/N,DEBUG/S
+
+  FROM/A    source file 
+  TO/A      destination file
+  DEVICE/N  1541 device number
+  DEBUG/S   sets debug mode (shows all packets).
+
+copies source file from the amiga to the destination file on the 1541.
+
+
+command READFILE:
+-----------------
+(this is a low level command, generally you should use 'COPY' instead)
+
+TEMPLATE: Over5 READFILE FROM/A,TO/A,DEVICE/N,DEBUG/S
+
+  FROM/A    source file 
+  TO/A      destination file
+  DEVICE/N  1541 device number
+  DEBUG/S   sets debug mode (shows all packets).
+
+copies source file from the 1541 to the destination file on the amiga.
+
+
+command WRITEMEM:
+------------------
+
+TEMPLATE: Over5 WRITEMEM FROM/A,NEWADDR,RUN/S,RESET/S,DEBUG/S
+
+  FROM/A    source file 
+  NEWADDR   optional load address
+  RUN/S     execute file with 'RUN' after transfer.
+  RESET/S   do reset on the c64 before transfer (with special hardware)
+  DEBUG/S   sets debug mode (shows all packets).
+
+Writes source file into the c64 memory.
+
+
+command READMEM:
+----------------
+
+TEMPLATE: Over5 READMEM START/A,END/A,TO/A,RESET/S,DEBUG/S
+
+  START/A   start address
+  END/A     end address
+  TO/A      destination file 
+  RESET/S   do reset on the c64 before transfer (with special hardware)
+  DEBUG/S   sets debug mode (shows all packets).
+
+Reads c64 memory between START and END to the destination file.
+
+
+command SYS:
+------------
+
+TEMPLATE: Over5 SYS PC/A,MEMORY,SR,AC,XR,YR,SP,RESET/S,DEBUG/S
+
+  PC/A      programcounter
+  MEMORY    contents of $01  (default 0x37)
+  SR        status register  (default 0x00)
+  AC        Accumulator      (default 0x00)
+  XR        X index register (default 0x00)
+  YR        Y index register (default 0x00)
+  SP        Stack pointer    (default 0xff)
+  RESET/S   do reset on the c64 before sys (with special hardware)
+  DEBUG/S   sets debug mode (shows all packets).
+
+Starts code beginning at pc.
+
+
+command RUN:
+------------
+
+TEMPLATE: Over5 RUN DEBUG/S
+
+  DEBUG/S   sets debug mode (shows all packets).
+
+Not yet implemented!
+
+
+command RESET:
+--------------
+
+TEMPLATE: Over5 RESET DEBUG/S
+
+  DEBUG/S   sets debug mode (shows all packets).
+
+does reset on the c64 (with special hardware)
+
+
+
+command SIMPLEWRITE:
+--------------------
+
+TEMPLATE: Over5 SIMPLEWRITE FROM/A,OLD/S
+
+  FROM/A    source file 
+  OLD/S     obsolete protocol. use for FastRS 1.1 or earlier
+
+Writes source file into the c64 memory using the simpleprotocol.
+(no handshaking)
+
+
+command SIMPLEREAD:
+-------------------
+
+TEMPLATE: Over5 SIMPLEREAD TO/A,OLD/S
+
+  TO/A      destination file 
+  OLD/S     obsolete protocol. Use this for FastRS 1.1 or earlier.
+
+Reads source file from the c64 memory using the simpleprotocol.
+(no handshaking)
+
+
+command BOOT:
+-------------
+(this is only used to transfer 'DiskSlave' or similar for the first time)
+
+TEMPLATE: Over5 BOOT FROM/A,SAFEADDR,OLD/S
+
+  FROM/A    source file 
+  SAFEADDR  optional safeaddr for use with VIC-20 (default $c000)
+            (only has meaning is OLD is specified)
+  OLD/S     use old protocol
+
+See 'README.INSTALLING' and 'boot.tech' for details.
+
+
+command DIR:
+------------
+
+TEMPLATE: Over5 DIR DEVICE/N,DEBUG/S
+
+  DEVICE/N  1541 device number
+  DEBUG/S   sets debug mode (shows all packets).
+
+Reads directory from the 1541 and shows it.
+
+
+command STATUS:
+---------------
+
+TEMPLATE: Over5 STATUS DEVICE/N,DEBUG/S
+
+  DEVICE/N  1541 device number
+  DEBUG/S   sets debug mode (shows all packets).
+
+Gets diskstatus from 1541 and shows it.
+
+
+command COMMAND:
+----------------
+
+TEMPLATE: Over5 COMMAND COMMAND/A,DEVICE/N,DEBUG/S
+
+  COMMAND/A diskcommand
+  DEVICE/N  1541 device number
+  DEBUG/S   sets debug mode (shows all packets).
+
+Sends a diskcommand to the 1541.
+
+
+command TEST:
+-------------
+(this command is not necessary for the ordinary user)
+
+TEMPLATE: Over5 TEST BLOCK/S,FILE/S,DEBUG/S
+
+  BLOCK/S   test block transfer
+  FILE/S    test file transfer
+  DEBUG/S   sets debug mode (shows all packets).
+
+Tests block transfer and/or file transfer.
+
+
+
+
+command WRITEDISK:
+------------------
+
+TEMPLATE: Over5 WRITEDISK FROM/A,DEVICE/N,DEBUG/S
+
+  FROM/A    source diskimage
+  DEVICE/N  1541 device number
+  DEBUG/S   sets debug mode (shows all packets).
+
+Writes the source diskimage to the 1541.  Diskimages are usually
+named '.dsk' or '.d64' and should be 174848 bytes in size.
+
+
+command WRITEZIP:
+-----------------
+
+TEMPLATE: Over5 WRITEZIP FROM/A,DEVICE/N,DEBUG/S
+
+  FROM/A    zipcode basename (1!<basename>, 2!<basename>, etc...)
+  DEVICE/N  1541 device number
+  DEBUG/S   sets debug mode (shows all packets).
+
+Decodes the zipcode archive and writes the diskimage to the 1541.
+
+
+
+command READDISK:
+-----------------
+
+TEMPLATE: Over5 READDISK TO/A,DEVICE/N,DEBUG/S
+
+  TO/A      destination diskimage 
+  DEVICE/N  1541 device number
+  DEBUG/S   sets debug mode (shows all packets).
+
+Reads an entire disk from the 1541.
+
+
+
+command READZIP:
+----------------
+
+TEMPLATE: Over5 READZIP TO/A,DEVICE/N,DEBUG/S
+
+  TO/A      zipcode basename (1!<basename>, 2!<basename>, etc...)
+  DEVICE/N  1541 device number
+  DEBUG/S   sets debug mode (shows all packets).
+
+Reads an entire disk from the 1541 and encodes it into a standard
+zipcode archive.
+This may sometimes produce shorter archives than zipcode, but the
+archive will unpack fine on the c64.
+
+
+
+command SERVER:
+---------------
+
+TEMPLATE: Over5 SERVER DEBUG/S
+
+  DEBUG/S   sets debug mode (shows all packets).
+
+Sets the amiga in SERVER MODE.  Run 'SerFile' on the c64 to use it.
+
+commands (#C"<COMMAND>" or .<COMMAND> in 'SerFile')
+
+.DIR or .$ or $
+  Displays the files in the current directory.
+
+.CD
+  Displays the name of the current directory.
+
+.CD <dir>
+  Set the current directory to <dir>.
+
+
+
+command HELP:
+-------------
+
+TEMPLATE: Over5 HELP or Over5 ?
+
+Shows small help text.
+
+
+
+System requirements:
+
+  Over5 should run on any system setup running OS2.04 or higher, although it
+has only been tested on an A3000/25 running OS3.1.  If you find bugs or have
+suggestions about how to make the program better please send a bugreport or
+a list of suggestions to the address at the end of this text.
+
+-----------------------------------------------------------------------------
+
+Author:
+
+  Daniel Kahlin is a student at the Royal Institute of Technology (Stockholm)
+Former c64 demo programmer (1986-1988).  He is deeply involved with computers
+and electronics.
+
+   InterNet:  <tlr@stacken.kth.se>
+
+  SnailMail:  Daniel Kahlin
+              Vanadisvägen 6, 2tr
+              s-113 46 Stockholm
+              Sweden
+
+      Phone:  08-34 84 73 (+468348473)
+
+-----------------------------------------------------------------------------
+

@@ -1,0 +1,189 @@
+History for Over5 by Daniel Kahlin <tlr@stacken.kth.se>
+----------------------------------------------------------------------------
+Copyright (c) 1995,1996 Daniel Kahlin <tlr@stacken.kth.se>
+
+Over5 0.711 (960420) tlr - Fifth release version.
+  - COPY code works ok.  Documented 'mach.c' so that porting by non Amiga
+    people should be possible.
+
+Over5 0.694 (960417) tlr - INTERNAL
+  - finetuned COPY code... still some to be done though.
+
+Over5 0.685 (960417) tlr - INTERNAL
+  - COPY recoded.  Now supports real AmigaDos wildcard for both
+    c64 and Amiga files.  Really neat!  
+  - Made furter advances towards portable code.
+
+Over5 0.660 (960416) tlr - INTERNAL
+  - Now uses config file!  (PROGDIR:Over5.config)
+    for you to be able to use other serial.devices.
+  - Reworked the number input routine.
+    now accepts binary (%11101) hex ($ef,0xff), octal (@777),
+    and decimal(+22,#22).
+
+Over5 0.624 (960405) tlr - INTERNAL
+  - Did major work on the boot procedure.
+    Should work with most cbm 8-bitters
+  - nice progress indicators during boot.
+  - Tested the above on: C64, VIC-20 16KB & VIC-20 3.5KB
+    works very smoothly!
+
+Over5 0.587 (960402) tlr - Fourth Release version.
+  - bumped revision for release.
+  - found nasty bug when closing the serial.device; a guru popped up now and
+    then.
+
+Over5 0.571 (960325) tlr - INTERNAL
+  - moved back old boot, and move new boot to BOOT NEW.
+  - WRITEZIP & READZIP now recognizes things like:
+    'work:archives/1!kooldemo' or '/demos/thedemo'
+
+Over5 0.561 (960322) tlr - INTERNAL
+  - moved old boot to option BOOT OLD
+  - created new and better boot procedure should work with VIC-20 aswell.
+
+Over5 0.547 (960124) tlr - INTERNAL
+  - added SAFEADDR option to BOOT
+  - made WRITEZIP recognize "1!<basename>" instead of just "<basename>"
+
+Over5 0.532 (960118) tlr - INTERNAL
+  - recoded copytail.asm, it's now totally position independant and
+    machine independant. (C64, VIC-20, PET, C128, etc...)
+    This hopefully makes BOOT.ASC usable with most 6502 based commodore
+    computers.
+
+Over5 0.528 (960116) tlr - INTERNAL
+  - Repaired the copy function! (nasty bug, always wrote 13 bytes)
+
+Over5 0.524 (960112) tlr - INTERNAL
+  - Fixed bugs in server code.
+  - removed several machine dependencies
+
+Over5 0.515 (960108) tlr - INTERNAL
+  - made MAJOR changes in sourecode. (cleaning up and restructuring)
+
+Over5 0.490 (951111) tlr - INTERNAL
+  - reprogrammed the server code, now it doesn't exit when it gets errors.
+  - inserted code for config file.
+  - modified the COPY code, now supports different devices.
+
+Over5 0.477 (951110) tlr - INTERNAL
+  - avoided a potential guru in the body transfer routines.
+  - recoded parts of the block handling for much better
+    error reporting.
+  - recoded parts of the protocol handling for the same
+    reson.
+
+Over5 0.472 (951105) tlr - INTERNAL
+  - added RUN skeleton.
+  - coded the RESET command.
+  - adjusted all error strings in the serial code
+  - added DEVICE option to most disk functions
+
+Over5 0.466 (951012) tlr - INTERNAL
+  - added NEWADDR option to WRITEMEM.
+
+Over5 0.463 (950919) tlr - Third Release Version
+  - coded READZIP, tested works ok.
+  - improved error checking on zipcode archives.
+
+Over5 0.439 (950917) tlr - INTERNAL
+  - coded WRITEZIP, tested works ok.
+
+Over5 0.421 (950830) tlr - INTERNAL
+  - implemented READDISK
+  - fixed fatal bug in READDISK and WRITEDISK, wouldn't write track 35.
+
+Over5 0.416 (950816) tlr - INTERNAL
+  - fixed bugs associated with srv_READSTRING and COMMAND '$'
+    could have been fatal in some cases.
+
+Over5 0.409 (950815) tlr - INTERNAL
+  - remade WRITEDISK for multitrack write (could be better)
+
+Over5 0.405 (950812) tlr - INTERNAL
+  - coded WRITEDISK, added READDISK skeleton.
+  - found bugs
+
+Over5 0.388 (950808) tlr - Second Release version
+  - coded commands DIR, $ and CD with server
+  - fixed new load and save routines for server
+  - added proper error string with server
+  - made alot of general code around the server! Should work!
+
+Over5 0.345 (950806) tlr - INTERNAL
+  - coded prototype 'reset' function (for use with cartridge)
+  - found nasty bug in 'BOOT'.  Last byte sent was trashed in
+    some cases.
+  - moved a 'jfree' call outside a loop, and thus removing the
+    infamous death bug from outer space! 
+
+Over5 0.317 (950805) tlr - INTERNAL
+  - coded srvsave
+  - fixed bugs in readstring.
+
+Over5 0.311 (950804) tlr - INTERNAL
+  - Coded complete readstring. (with addstring)
+  - coded srvload
+
+Over5 0.293 (950803) tlr - INTERNAL
+  - Programmed a simple server.
+  - Set SERF_RAD_BOOGIE.
+    Should improve performance on slow computers (A500)
+  - Fixed safer syncing during BOOT.
+  - Fixed cosmetic bug in bl_sendfile.
+  - Lowerred DELAY_BLOCK to 1.8 millisecs. (increases transfer speed)
+
+Over5 0.276 (950722) tlr - First Release
+  - Restructured code, mostly to be able to compile on linux.
+  - Added server skeleton.
+  - fixed reporting of return codes
+
+Over5 0.267 (950720) tlr - INTERNAL
+  - Implemented HELP option
+  - Fixed translation of '(' to '[' and ')' to ']'
+  - trimmed basic boot
+  - improved docs (could be much better though)
+  - fixed parameter error in test
+  - 'COPY' now shows diskstatus
+
+Over5 0.252 (950713) tlr - INTERNAL
+  - Now sends device number ok. (but always 8)
+  - Implemented new compact structures.
+
+Over5 0.249 (950711) tlr - INTERNAL
+  - Fixed bug in WRITEMEM
+  - Added option RUN to WRITEMEM
+
+Over5 0.246 (950711) tlr - INTERNAL
+  - Coded SYS
+
+Over5 0.240 (950710) tlr - INTERNAL
+  - changed boot speed to 150 baud
+  - Coded MEMORYREAD/WRITE
+
+Over5 0.226 (950702) tlr - INTERNAL
+  - coded 300 baud boot, works ok.
+
+Over5 0.220 (950701) tlr - INTERNAL
+  - Fixed wildcards in the copy command
+  - if redirected to a file... no CSI codes!
+
+Over5 0.195 (950701) tlr - INTERNAL
+  - Coded the copy command (works ok!)
+
+Over5 0.176 (950701) tlr - INTERNAL
+  - Fixed so that DEBUG works again
+  - Made diskturbo for "diskslave"
+  - Added klugdge delay in block read/write
+    (c64 code really needs optimizing)
+
+Over5 0.170 (950701) tlr - INTERNAL
+  - Longer and better filetest (40960 bytes)
+  - fixed problems in "Block.asm" (couldn't read/write under rom)
+
+Over5 0.168 (950628) tlr - INTERNAL
+  - Fixed parameter handling so that quoting works ok.
+  - Fixed c64 basic boot. 
+
+

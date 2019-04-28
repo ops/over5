@@ -1,0 +1,84 @@
+INSTALL-NOTES 
+
+1. do 'make' at the top level
+2. copy bin/over5 to wherever you want the binary.
+3. copy bin/.over5rc to your home directory, and edit to your liking.
+done!
+
+common mistake:
+  If the error 'Over5: Permission denied!' occurs, you probably have
+forgotten to set the right device in .over5rc, or maybe the permissions
+on the device are messed up.
+
+NOTE: there are several problems with 'over5 copy':
+ - wildcards are case sensitive, even for cbm filenames and cbm
+   filenames are always uppercase. (if no wildcards are used, lowercase
+   is ok though)
+ - the current directory ('.') must be specified as './', otherwise 
+   copy will fail.
+ - there can be a problem with using the fileturbo together with a 
+   Commodore 1571 drive.  The last byte of each disk block may be
+   incorrectly transferred. (If you have a 1541, Pitch's bug section
+   below doesn't apply.)
+
+CONTACT:
+  If you find this program useful, have suggestions and/or comments
+please mail the team at <over5@kahlin.net>, so that we know that 
+further development is wanted.
+
+/Daniel Kahlin 
+
+
+Here follows Andreas' original notes:
+
+README for the Linux version (well, sort of...)
+-----------------------------------------------
+
+** For more general issues, check out the main README file (Over5.readme)
+** and all the files in the 'doc' subdirectory.
+
+Everything seems to be working fine now. (For Linux, that is.) It needs a
+little bit more work to be able to compile right away under different OS:es.
+I've gotten it to compile with _minimal_ changes for IRIX and OSF1, but
+SunOS seems very reluctant, and BeOS wasn't at all happy about it either.
+I didn't have a c64 handy, so I haven't actually tested Over5 under any other
+OS or even on any other computer than my own, but it _should_ work
+(yeah, right ;).
+
+Also, I've only tried compiling and running it under RedHat, but I see no
+reason why it shouldn't work under different distributions. If you try it
+with any configuration significantly different from mine (PII/333 RedHat 6)
+please let me know if it works. (If it bombs, there's an even bigger reason
+to let me know of course.) It should work just as well on _a lot_ older
+machines, but who knows...
+
+Differences from Amiga/win32 versions:
+--------------------------------------
+
+The executable is named 'over5'.
+
+The config file is named '.over5rc' and must exist in either your home
+directory (the dir pointed to by your HOME environment variable that is) or
+the directory you are in when you run over5. If over5 can't find the config
+file, no warning is given, but default settings of DEVICE=8 and
+SERIALDEVICE=/dev/ttyS0 are used.
+
+The 'SERIALDEVICE' entry in the config file should of course be something like
+'/dev/ttySx' (where x is 0-3 on your 'normal' pc) rather than 'serial.device'
+(for the Amiga) or 'COMx' (for the win32 version).
+
+Bugs(!):
+--------
+
+You _have_to_disable_the_diskturbo_ when reading single files with
+Diskslave. A timing bug from hell has turned up that only shows on 'fast'
+machines. The bug is also there in the win32 version, so I'm fairly sure
+I didn't screw something up. (I will try to fix it anyway, of course.)
+
+Other things still left to do:
+------------------------------
+
+GetSerialError() does nothing, so serial error reporting is either weird or
+none existant. (I'm not quite sure how to handle this in a good way yet)
+
+/pitch <e92_aan@e.kth.se>

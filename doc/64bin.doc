@@ -1,0 +1,158 @@
+Documentation for Over5 64binaries by Daniel Kahlin <tlr@stacken.kth.se>
+-----------------------------------------------------------------------------
+Copyright (c) 1995,1996 Daniel Kahlin <tlr@stacken.kth.se>
+
+Distribution:
+
+  Over5 is FREEWARE (Freely-Distributable), but copyrighted by me. (NOT PD!)
+None of the included files may be modified and/or removed.  Permission is
+given to freely distribute this program provided you include all files from
+the original archive, and no fee is charged in excess of reasonable media
+and mailing costs.  The program may not be used for commercial purposes
+without written permission from the author.
+
+
+Disclaimer:
+
+  I cannot in any way be held responsible for anything this program does.
+You are using it entirely at your own risk.  Every effort has been made to
+keep this program bug free.  But, IF for example a bug exists that blows up
+your entire computer, don't blame me.
+
+-----------------------------------------------------------------------------
+
+Documentation:
+
+  Over5 64binaries are: DiskSlave, MemSlave, MemSlaveC800, SerFile & FastRS.
+
+
+
+DiskSlave:
+----------
+  DiskSlave is a disk server for the c64/1541.  It supports the following:
+READ/WRITEFILE (COPY), DIR, STATUS, COMMAND, READ/WRITEDISK and TEST.
+Includes diskturbo for: read/writefile, read/writedisk and fastformat.
+The diskturbo code can be switched off at the menu.
+You can turn off verify if you really want to.  I do NOT recommend this!
+Pressing <RESTORE> returns to menu.
+
+USAGE:
+  Load and run.
+To restart after reset or similar, type 'SYS 2069'.
+
+
+
+MemSlave & MemSlaveC800:
+------------------------
+  MemSlave is a memory server for the c64.  It supports the following:
+READ/WRITEMEM, SYS, RUN. 
+
+USAGE:
+  Load and run.
+To restart after reset or similar, type 'SYS 2069'.
+(SYS 51200 for MemSlaveC800)
+
+
+
+SerFile:
+--------
+  SerFile uses the Amiga as harddisk server.  (run 'Over5 Server')
+
+USAGE:
+  Load and run.
+Now it is installed ($f600-$ffff)
+
+Commands:
+
+  'LOAD "<FILENAME>",6'
+  '#L"<FILENAME>"'
+  '/ "<FILENAME>"' or '/<FILENAME>'
+Loads the file from the server into memory.
+
+  'SAVE "<FILENAME>",6'
+  '#S"<FILENAME>"'
+Saves file from memory to the server.
+
+  '#C"<COMMAND>"'
+  '."<COMMAND"' or '.<COMMAND>'
+Sends command to the server. ('#$' can be used instead of '#C"$"')
+
+  '#C"DIR"'
+  '#C"$"'
+  '#$'
+  '$'
+  '.$'
+Displays the files in the current directory.
+
+  '#C"CD"'
+  '.CD'
+Displays the name of the current directory.
+
+  '#C"CD <dir>"'
+  '.CD <dir>'
+Set the current directory to <dir>.
+
+Please refer to Over5.doc for additional '#C' commands.
+
+  '#K'
+Uninstalls SerFile.
+
+The '#L', '/' and '#S' commands are slightly better than 'LOAD' / 'SAVE' because
+they do not use BASIC variable storage to store the filename.  (i.e they do
+not trash memory just below $a000)
+
+SerFile looks dead during transfer. (screen blanked, no flashing)
+This is normal!  I will make it flash a bit in late versions.
+
+
+
+FastRS:
+-------
+  FastRS is a memory transferrer for the c64, much like a tapeturbo,  It
+supports the following: SIMPLEREAD and SIMPLEWRITE. 
+
+  FastRS for the Vic-20 is a prototype version, works only with 16KB.
+works the same as the c64 version except it installs at $5c00-$6000.
+
+USAGE:
+  Load and run.
+Now it is installed. ($fc00-$ffff)
+
+To receive:
+  type 'SYS 700'.  You will see the text 'WAITING...' and then
+the screen blanks.  Now type 'Over5 SIMPLEWRITE <filename>' on the Amiga to
+send.
+
+To send:
+  Start 'Over5 SIMPLEREAD <filename>' on the Amiga. It should tell you
+'Waiting...'.  Now type 'SYS 703' on the c64 to send.
+
+
+
+System requirements:
+
+  Over5 64binaries should run on any c64 or c128(in c64 mode), although it
+has only been tested on an old c64 with, and without TFC III.  If you find
+bugs or have suggestions about how to make any of the programs better please
+send a bugreport and/or a list of suggestions to the address at the end of
+this text.
+
+-----------------------------------------------------------------------------
+
+Author:
+
+  Daniel Kahlin is a student at the Royal Institute of Technology (Stockholm)
+Former c64 demo programmer (1986-1988).  He is deeply involved with computers
+and electronics.
+
+   InterNet:  <tlr@stacken.kth.se>
+
+  SnailMail:  Daniel Kahlin
+              Vanadisvägen 6, 2tr
+              s-113 46 Stockholm
+              Sweden
+
+      Phone:  08-34 84 73 (+468348473)
+
+-----------------------------------------------------------------------------
+

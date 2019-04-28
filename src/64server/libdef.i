@@ -1,0 +1,25 @@
+;**************************************************************************
+;**
+;** libdefs.i
+;** Copyright (c) 1995,1996 Daniel Kahlin <tlr@stacken.kth.se>
+;**
+;******
+
+READCOLOR	EQU	$5
+WRITECOLOR	EQU	$5
+LOADCOLOR	EQU	$6
+SAVECOLOR	EQU	$6
+STATUSCOLOR	EQU	$6
+COMMANDCOLOR	EQU	$6
+STANDBYCOLOR	EQU	$b
+TIMEOUTCOLOR	EQU	$2
+OUTCOLOR	EQU	$0
+
+
+MODEF_TURBO	EQU	%00010000
+MODEF_VERIFY	EQU	%00100000
+MODEF_ROM	EQU	%00000001
+
+ERR_NONE	EQU	0
+ERR_TIMEOUT	EQU	1
+ERR_FAILED	EQU	2

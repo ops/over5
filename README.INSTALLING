@@ -1,0 +1,50 @@
+README.INSTALLING
+-----------------
+
+Required:
+  First you have to have a c64/c128/vic20 computer (which is referred to as
+ c64 in the following text) with a diskdrive, an RS-232 converter (like the
+VIC-1011A RS232C or the Handic V24 interface) and a 3-line standard
+nullmodem cable.  You must also have an Amiga running OS2.04 or higher.
+
+Installing:
+
+1.  Type in the 'boot.asc' program on your c64. (boot.asc is exactly the
+    same on c64/vic20/etc...)  This is an 150 baud receiver program.
+    Remember to switch to normal kernal!  ("boot" needs the kernal RS232
+    drivers)  Do not add extra spaces to the basic code, as this slows down
+    the program and it might fail to work.
+    If you are using some kind cartridge (TFC, AR, etc...) turn it OFF.
+
+2.  Save "boot" to disk!
+
+3.  Type 'RUN' on the c64.  It should now say 'WAITING...'.
+
+4.  Type 'bin/Over5 BOOT 64bin/diskslave' on the Amiga.
+    some '#'s should start appearing on the c64.
+    (yes, it is one hash mark per byte)
+
+5.  First the booter is transferred. 512 bytes. (40 seconds approx)
+
+6.  The c64 should now say '* STAGE 2 *', this means the booter is active.
+    If not check the c64 program, cables, etc... and goto 3
+
+7.  After a while some more '#'s should start appearing on the c64.  This
+    time more slowly.  No worry though, because 32 bytes are transferred
+    for each hash mark. 
+    This will last for about 2:30 minutes.
+
+8.  Now the c64 should say 'OK, NOW SAVE TO DISK!' (tape will work fine to)
+    If it does: type 'SAVE"DISKSLAVE",8'.
+    If not check the c64 program, cables, etc... and goto 3
+
+9.  Type "RUN" on the c64. (Select Turbo on or off)  Then press space.
+    The screen should now be grey.
+
+10. Transfer the rest of '64bin' with 'bin/Over5 COPY <filename> 8:'
+
+
+(For in-depth info on the boot procedure read 'boot.tech')
+
+Have fun!
+/Daniel Kahlin <tlr@stacken.kth.se>

@@ -1,0 +1,47 @@
+release_test.txt - release test procedure
+-----------------------------------------
+
+Boot and DiskSlave:
+1.  Use BOOT' to transfer DiskSlave, and save to disk.
+2.  Use DiskSlave to transfer the file 'DISKSLAVE' back, and compare.
+3.  Run 'over5 test block' and 'over5 test file'.
+4.  Transfer FastRS, MemSlave, MemSlaveC800, SerFile using 'over5 copy'
+5.  Retrieve them again using 'over5 copy 8:* .', and compare.
+6.  Format disk using 'over5 command', and get status using 'over5 status'.
+7.  Write a zipcode archive to disk using 'over5 writezip'
+8.  Read it back using 'over5 readzip new'
+9.  Format disk.
+10. Press <restore> in DiskSlave, and disable the turbo.
+11. do 4-7
+12. Read it back using 'over5 readdisk', and compare to the original disk.
+DONE!
+
+FastRS:
+1.  Send a big file ($0801-$f000) using 'over5 simplewrite'.
+2.  Receive the same using 'over5 simpleread', and compare.
+DONE!
+
+MemSlaveC800:
+1.  Send a medium size file ($0801-$c000) using 'over5 writemem'
+2.  Receive the same area using 'over5 readmem' and compare.
+3.  Send same file again, but this time using 'over5 writemem <file> run'
+4.  Try 'over5 sys fce2'. (should reset)
+DONE!
+
+MemSlave:
+1.  Send a file in the area ($3000-$a000) using 'over5 writemem'
+2.  Receive the same area using 'over5 readmem' and compare.
+3.  Try 'over5 sys fce2'. (should reset)
+
+SerFile:
+1.  Run 'over5 server' i a directory with a testfile.
+2.  Run SerFile.
+3.  Test commands '$', '#$', '.$', '.'.
+4.  Test '.CD', '.CD ..', '$', and '.CD <xxx>' back to where we were.
+5.  Test '/<testfile>'
+6.  Test '#S"<testfile>.new"
+7.  Compare the files.
+DONE!
+
+/Daniel Kahlin
+
