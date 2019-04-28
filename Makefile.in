@@ -1,0 +1,76 @@
+##########################################################################
+#
+# FILE  Makefile.in
+# Copyright (c) 2000, 2002 Daniel Kahlin
+# Written by Daniel Kahlin <daniel@kahlin.net>
+# $Id: Makefile.in,v 1.6 2002/11/17 02:01:54 tlr Exp $
+#
+# DESCRIPTION
+#   This file will be processed automatically by ./configure to produce
+#   the file Makefile
+#
+######
+
+PACKAGE_ROOT=.
+include	$(PACKAGE_ROOT)/package.mk
+
+# to avoid problems with old make
+SHELL = /bin/sh
+
+################################################
+#    DO NOT MODIFY ANYTHING AFTER THIS LINE    #
+################################################
+
+TAR=tar
+GZIP=gzip
+
+export DISTROOT DISTDIR
+
+all::	subdirs
+
+install:: subdirs
+
+# build distribution archive
+DISTNAME:=$(PACKAGE)-$(VERSION)
+DISTROOT:=/tmp/$(DISTNAME)
+DISTDIR:=$(DISTROOT)
+dist::	predist subdirs cbmbindist
+	cp configure configure.in install-sh Makefile.in package.mk $(DISTDIR)
+	cp README INSTALL DISCLAIMER BUGS AUTHORS TODO NEWS $(DISTDIR)
+	cp ChangeLog INSTALL.cbm $(DISTDIR)
+	cp boot.asc LICENSE README.win32 THANKS  $(DISTDIR)
+	mkdir $(DISTDIR)/doc
+	cp doc/64bin-history.old doc/over5-history.old $(DISTDIR)/doc
+	cp doc/boot-tech.txt doc/interface.txt doc/protocol.txt $(DISTDIR)/doc
+	cp doc/over5.txt doc/memslave.txt doc/diskslave.txt $(DISTDIR)/doc
+	cp doc/serfile.txt doc/fastrs.txt doc/over5kernal.txt $(DISTDIR)/doc
+	cd /tmp; $(TAR) cf $(DISTNAME).tar $(DISTNAME); \
+	$(GZIP) -9 $(DISTNAME).tar
+	mv /tmp/$(DISTNAME).tar.gz .
+	rm -r $(DISTDIR)
+predist::
+	rm -rf $(DISTDIR)
+	mkdir $(DISTDIR)
+
+cbmbindist::
+	cd cbm && $(MAKE) bindist
+
+bindist:: subdirs
+
+distclean:: clean subdirs
+	rm -f config.cache config.log config.status
+	rm -f Makefile
+	rm -f *.tar.gz
+
+# clean out old targets
+clean::	subdirs
+	rm -f *~ \#*\# core
+
+# these are our subdirectories, they must be provided as dependencies
+# for everything that should propagate.
+subdirs::
+	cd over5 && $(MAKE) $(MAKECMDGOALS)
+	cd tlrutils && $(MAKE) $(MAKECMDGOALS)
+	cd cbm && $(MAKE) $(MAKECMDGOALS)
+
+# eof

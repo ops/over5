@@ -1,0 +1,37 @@
+TODO
+----
+- change makefile such that things that require external roms
+  are moved into bash-scripts instead.  Clean up makefile!
+- F-key support
+- disk command
+- disk directory
+- change unit
+- serfile support
+- memslave support
+- quick memtest
+- key to go into server mode
+- key to do safe copy of data into ram at d000
+- key to do reset without reset start.
+- make it work with AR VI & TFC.
+- could it work with tape-code still in place?
+- make a vic-20 version.
+
+toolset:
+- kernal/basic/charset? tester.
+- patch tool with intelligent recognition of the rom version.
+
+- ppatch: add size of addresses and lens to the format.
+- ppatch: add a flag for open or closed format. 
+- ppatch: format for specifying crc areas?
+- output IPS format, import IPS format? 
+
+IDEAS
+-----
+- look at other roms.  (speeddos, jiffydos, etc...) for ideas.
+
+
+Cartridge compatibility
+
+TFC III:
+  RESET + RUN/STOP goes directly to basic.
+

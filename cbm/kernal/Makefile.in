@@ -1,0 +1,108 @@
+##########################################################################
+#
+# FILE  Makefile.in
+# Copyright (c) 2002 Daniel Kahlin
+# Written by Daniel Kahlin <daniel@kahlin.net>
+# $Id: Makefile.in,v 1.8 2002/11/17 02:01:54 tlr Exp $
+#
+# DESCRIPTION
+#   This file will be processed automatically by ./configure to produce
+#   the file Makefile
+#
+######
+
+PACKAGE_ROOT=../..
+include	$(PACKAGE_ROOT)/package.mk ../common.mk
+
+# to avoid problems with old make
+SHELL = /bin/sh
+
+################################################
+#    DO NOT MODIFY ANYTHING AFTER THIS LINE    #
+################################################
+
+# which commands to use
+
+#
+# make everything
+#
+all::	over5kernal-c64-pal.pch over5kernal-c64-pal-ram.pch\
+	over5kernal-c64-ntsc.pch over5kernal-c64-ntsc-ram.pch
+
+testrom.prg:	testrom.asm kernal_c64_ram
+	$(DASM) $< -o$@ $(DASMFLAGS)
+
+kernal_c64_ram:	test_c64/kernal_v2.en stripkernal_c64.pch newkernal_c64_ram.pch
+	$(TLRPATCH) test_c64/kernal_v2.en stripkernal_c64.pch stripped_c64
+	$(TLRPATCH) stripped_c64 newkernal_c64_ram.pch kernal_c64_ram
+
+over5kernal-c64-pal-ram.pch: stripkernal_c64.pch newkernal_c64_ram.pch
+	$(TLRPATCH) -m stripkernal_c64.pch newkernal_c64_ram.pch $@
+
+over5kernal-c64-pal.pch: stripkernal_c64.pch newkernal_c64.pch
+	$(TLRPATCH) -m stripkernal_c64.pch newkernal_c64.pch $@
+
+over5kernal-c64-ntsc-ram.pch: stripkernal_c64.pch newkernal_c64ntsc_ram.pch
+	$(TLRPATCH) -m stripkernal_c64.pch newkernal_c64ntsc_ram.pch $@
+
+over5kernal-c64-ntsc.pch: stripkernal_c64.pch newkernal_c64ntsc.pch
+	$(TLRPATCH) -m stripkernal_c64.pch newkernal_c64ntsc.pch $@
+
+stripkernal_c64.pch:	stripkernal_c64.asm
+	$(DASM) $< -o$@ -f2 $(DASMFLAGS)
+
+newkernal_c64.pch newkernal_c64_ram.pch:	newkernal_c64.asm
+	$(DASM) $< -onewkernal_c64.pch -f2 -DC64 -DPAL $(DASMFLAGS)
+	$(DASM) $< -onewkernal_c64_ram.pch -f2 -DC64 -DPAL -DKERNALPATCHRAM $(DASMFLAGS)
+
+newkernal_c64ntsc.pch newkernal_c64ntsc_ram.pch:	newkernal_c64.asm
+	$(DASM) $< -onewkernal_c64ntsc.pch -f2 -DC64 -DNTSC $(DASMFLAGS)
+	$(DASM) $< -onewkernal_c64ntsc_ram.pch -f2 -DC64 -DNTSC -DKERNALPATCHRAM $(DASMFLAGS)
+
+kernal_vic20:	test_vic20/kernal.pal stripkernal_vic20.pch newkernal_vic20.pch
+	$(TLRPATCH) test_vic20/kernal.pal stripkernal_vic20.pch stripped_vic20
+	$(TLRPATCH) stripped_vic20 newkernal_vic20.pch kernal_vic20
+
+stripkernal_vic20.pch:	stripkernal_vic20.asm
+	$(DASM) $< -o$@ -f2 $(DASMFLAGS)
+
+newkernal_vic20.pch:	newkernal_vic20.asm
+	$(DASM) $< -o$@ -f2 $(DASMFLAGS)
+
+# build the distribution archive
+DISTDIR:=$(DISTDIR)/kernal
+dist::
+	mkdir $(DISTDIR)
+	cp Makefile.in $(DISTDIR)
+	cp *.asm *.i $(DISTDIR)
+	cp TODO kernalpatch.txt $(DISTDIR)
+
+# build the binary distribution
+bindist::	all
+	cp over5kernal-c64-pal.pch $(DISTROOT)/bin-c64-pal/
+	cp over5kernal-c64-pal-ram.pch $(DISTROOT)/bin-c64-pal/
+	cp over5kernal-c64-ntsc.pch $(DISTROOT)/bin-c64-ntsc/
+	cp over5kernal-c64-ntsc-ram.pch $(DISTROOT)/bin-c64-ntsc/
+
+# clean out old targets
+clean::
+	rm -f *.o 
+	rm -f *~ \#*\# core a.out
+	rm -f *.pch
+	rm -f testrom.prg
+	rm -f stripped_c64 kernal_c64 kernal_c64_ram
+	rm -f stripped_vic20 newkernal_vic20 kernal_vic20
+
+# clean for dist
+distclean:: clean
+	rm -f Makefile
+
+
+# eof
+
+
+
+
+
+
+

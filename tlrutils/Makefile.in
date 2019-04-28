@@ -1,0 +1,120 @@
+##########################################################################
+#
+# FILE  Makefile.in
+# Copyright (c) 2002 Daniel Kahlin
+# Written by Daniel Kahlin <daniel@kahlin.net>
+# $Id: Makefile.in,v 1.5 2002/11/17 02:01:54 tlr Exp $
+#
+# DESCRIPTION
+#   This file will be processed automatically by ./configure to produce
+#   the file Makefile
+#
+######
+
+PACKAGE_ROOT=..
+include	$(PACKAGE_ROOT)/package.mk
+
+# version info
+#PACKAGE=tlrutils
+#VERSION=0.1
+
+# to avoid problems with old make
+SHELL = /bin/sh
+
+################################################
+#    DO NOT MODIFY ANYTHING AFTER THIS LINE    #
+################################################
+
+# flags
+LDFLAGS = @LDFLAGS@
+CFLAGS = @CFLAGS@ @DEFS@ -DPACKAGE=\"$(PACKAGE)\" -DVERSION=\"$(VERSION)\" -Wall
+SOCKLIB = @LIBS@
+
+# which commands to use
+CC = @CC@
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+TAR=tar
+GZIP=gzip
+
+prefix = /usr/local
+exec_prefix = $(prefix)
+
+bindir = $(exec_prefix)/bin
+mandir = $(exec_prefix)/man
+
+# rules!
+
+.SUFFIXES:
+.SUFFIXES: . .c .o
+# how to build .o from .c
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $< 
+%: %.o
+	$(CC) $(LDFLAGS) -o $@ $^
+
+#
+# make everything
+#
+all::	        tlrpatch tlrdiff tlrlink tlrreloc
+
+# binaries
+
+tlrpatch:	tlrpatch.o util.o
+tlrdiff:	tlrdiff.o util.o
+tlrlink:	tlrlink.o util.o
+tlrreloc:	tlrreloc.o util.o
+
+# source files
+
+tlrpatch.o:	tlrpatch.c
+tlrdiff.o:	tlrdiff.c
+tlrlink.o:	tlrlink.c
+tlrreloc.o:	tlrreloc.c
+
+util.o:		util.c
+
+install::	all
+	$(INSTALL_PROGRAM) tlrpatch $(bindir)/tlrpatch
+	$(INSTALL_PROGRAM) tlrdiff $(bindir)/tlrdiff
+	$(INSTALL_PROGRAM) tlrlink $(bindir)/tlrlink
+	$(INSTALL_PROGRAM) tlrreloc $(bindir)/tlrreloc
+#	$(INSTALL_DATA) tlrpatch.1 $(mandir)/man1/tlrpatch.1
+#	$(INSTALL_DATA) tlrdiff.1 $(mandir)/man1/tlrdiff.1
+#	$(INSTALL_DATA) tlrlink.1 $(mandir)/man1/tlrlink.1
+#	$(INSTALL_DATA) tlrreloc.1 $(mandir)/man1/tlrreloc.1
+
+# build the distribution archive
+DISTDIR:=$(DISTDIR)/tlrutils
+#DISTNAME=$(PACKAGE)-$(VERSION)
+#DISTDIR=/tmp/$(DISTNAME)
+dist::
+	mkdir $(DISTDIR)
+	cp configure configure.in Makefile.in config.h.in $(DISTDIR)
+	cp ChangeLog TODO $(DISTDIR)
+	cp *.c util.h $(DISTDIR)
+	mkdir $(DISTDIR)/dasm
+	cp dasm/patch.i $(DISTDIR)/dasm
+
+# build binary distribution archive
+BINDISTNAME=$(PACKAGE)-$(VERSION)-$(OSTYPE)
+BINDISTDIR=/tmp/$(BINDISTNAME)
+bindist::	tlrpatch tlrdiff tlrlink tlrreloc 
+	$(TAR) cf $(BINDISTNAME).tar tlrpatch tlrdiff tlrlink tlrreloc
+	rm -f $(BINDISTNAME).tar.gz
+	$(GZIP) -9 $(BINDISTNAME).tar
+
+# clean out old targets
+clean::
+	rm -f *.o
+	rm -f *~ \#*\# core
+	rm -f tlrpatch tlrdiff tlrlink tlrreloc
+
+# clean for dist
+distclean::	clean
+	rm -f config.cache config.log config.status
+	rm -f config.h Makefile
+	rm -f *.tar.gz
+
+# eof

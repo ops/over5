@@ -1,0 +1,10 @@
+2002-05-11  Daniel Kahlin <daniel@kahlin.net>
+	* kernal/Makefile.in: Uses tlrpatch -m to build complete patches.
+	Removed stuff that is targetted at my specific devel-platform.
+	* kernal/patchrom.asm: Made a runtime patcher for the c64.
+
+2002-05-07  Daniel Kahlin <daniel@kahlin.net>
+	* servers/memslave.asm servers/ms_main.asm: Made memslave work
+	again.
+	* fastrs/fastrs.asm: Made fastrs20 relocatable.  Works ok.
+	* common.mk.in: added (inherited) package information.

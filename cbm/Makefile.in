@@ -1,0 +1,53 @@
+##########################################################################
+#
+# FILE  Makefile.in
+# Copyright (c) 2000, 2002 Daniel Kahlin
+# Written by Daniel Kahlin <daniel@kahlin.net>
+# $Id: Makefile.in,v 1.4 2002/11/17 00:47:30 tlr Exp $
+#
+# DESCRIPTION
+#   This file will be processed automatically by ./configure to produce
+#   the file Makefile
+#
+######
+
+PACKAGE_ROOT=..
+include	$(PACKAGE_ROOT)/package.mk
+
+export DISTROOT DISTDIR
+
+all::	subdirs
+
+# build the distribution archive
+DISTDIR:=$(DISTDIR)/cbm
+dist::	predist subdirs
+	cp Makefile.in configure.in configure common.mk.in ChangeLog $(DISTDIR)
+predist::
+	mkdir $(DISTDIR)
+
+# build the binary distribution
+bindist:: prebindist subdirs
+prebindist::
+	mkdir $(DISTROOT)/bin-c64-pal
+	mkdir $(DISTROOT)/bin-c64-ntsc
+	mkdir $(DISTROOT)/bin-vic20-pal
+	mkdir $(DISTROOT)/bin-vic20-ntsc
+
+# clean out old targets
+clean::	subdirs
+	rm -f *~ \#*\#
+
+# clean for dist
+distclean:: clean
+	rm -f config.cache config.log config.status
+	rm -f Makefile common.mk
+	rm -f *.tar.gz
+
+# these are our subdirectories, they must be provided as dependencies
+# for everything that should propagate.
+subdirs::
+	cd fastrs && $(MAKE) $(MAKECMDGOALS)
+	cd servers && $(MAKE) $(MAKECMDGOALS)
+	cd kernal && $(MAKE) $(MAKECMDGOALS)
+
+# eof

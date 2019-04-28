@@ -1,0 +1,66 @@
+##########################################################################
+#
+# FILE  Makefile.in
+# Copyright (c) 2000,2002 Daniel Kahlin
+# Written by Daniel Kahlin <daniel@kahlin.net>
+# $Id: Makefile.in,v 1.7 2002/11/17 00:47:30 tlr Exp $
+#
+# DESCRIPTION
+#   This file will be processed automatically by ./configure to produce
+#   the file Makefile
+#
+######
+
+PACKAGE_ROOT=../..
+include	$(PACKAGE_ROOT)/package.mk ../common.mk
+
+all::	fastrs fastrs20_reloc fastrs20_reloc_NTSC
+
+fastrs: fastrs.asm
+	$(DASM) fastrs.asm -ofastrs -DPAL -DC64 $(DASMFLAGS)
+	$(DASM) fastrs.asm -ofastrs_NTSC -DNTSC -DC64 $(DASMFLAGS)
+	$(DASM) fastrs.asm -ofastrs20 -DPAL -DVIC20 $(DASMFLAGS)
+	$(DASM) fastrs.asm -ofastrs20_NTSC -DNTSC -DVIC20 $(DASMFLAGS)
+
+fastrs20_reloc:	fastrs.asm
+	$(DASM) fastrs.asm -ofastrs20_0000 -DPAL -DVIC20_RELOC -DRELOC1=\$$0000 $(DASMFLAGS)
+	$(DASM) fastrs.asm -ofastrs20_0100 -DPAL -DVIC20_RELOC -DRELOC1=\$$0100 $(DASMFLAGS)
+	$(TLRRELOC) -r fastrs20_0000 fastrs20_0100 reloc_tmp
+	$(DASM) fastrs.asm -ofastrs20_reloc -DPAL -DVIC20_RELOC -DRELOC $(DASMFLAGS)
+	rm -f fastrs20_0000 fastrs20_0100 reloc_tmp
+
+fastrs20_reloc_NTSC:	fastrs.asm
+	$(DASM) fastrs.asm -ofastrs20_0000 -DNTSC -DVIC20_RELOC -DRELOC1=\$$0000 $(DASMFLAGS)
+	$(DASM) fastrs.asm -ofastrs20_0100 -DNTSC -DVIC20_RELOC -DRELOC1=\$$0100 $(DASMFLAGS)
+	$(TLRRELOC) -r fastrs20_0000 fastrs20_0100 reloc_tmp
+	$(DASM) fastrs.asm -ofastrs20_reloc_NTSC -DNTSC -DVIC20_RELOC -DRELOC $(DASMFLAGS)
+	rm -f fastrs20_0000 fastrs20_0100 reloc_tmp
+
+# build the distribution archive
+DISTDIR:=$(DISTDIR)/fastrs
+dist::
+	mkdir $(DISTDIR)
+	cp Makefile.in README $(DISTDIR)
+	cp fastrs.asm timing.i $(DISTDIR)
+
+# build the binary distribution
+bindist::	all
+	cp fastrs $(DISTROOT)/bin-c64-pal/
+	cp fastrs_NTSC $(DISTROOT)/bin-c64-ntsc/
+	cp fastrs20 $(DISTROOT)/bin-vic20-pal/
+	cp fastrs20_NTSC $(DISTROOT)/bin-vic20-ntsc/
+	cp fastrs20_reloc $(DISTROOT)/bin-vic20-pal/
+	cp fastrs20_reloc_NTSC $(DISTROOT)/bin-vic20-ntsc/
+
+# clean out old targets
+clean::
+	rm -f *~ \#*\#
+	rm -f a.out
+	rm -f fastrs fastrs_NTSC fastrs20 fastrs20_NTSC
+	rm -f fastrs20_reloc fastrs20_reloc_NTSC
+
+# clean for dist
+distclean:: clean
+	rm -f Makefile
+
+# eof

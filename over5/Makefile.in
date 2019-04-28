@@ -1,0 +1,141 @@
+# Over5 Makefile for Linux
+# Mostly copied straight from the win32 one by Martin.
+# Now new and improved, moving towards GNU standard.
+# (In very small steps...)
+
+PACKAGE_ROOT=..
+include	$(PACKAGE_ROOT)/package.mk
+
+SHELL = /bin/sh
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+.SUFFIXES:
+.SUFFIXES: .c .o
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = $(exec_prefix)/bin
+
+#
+# Compiler command definitions
+#
+RM	= rm -f
+STRIP	= strip #--strip-all <--turned out to be incompatible
+CC	= @CC@
+CPPFLAGS= @CPPFLAGS@
+CFLAGS	= $(CPPFLAGS) -Wall @CFLAGS@
+
+
+LDFLAGS	= @LDFLAGS@
+LIBS	= @LIBS@
+INSTALL	= @INSTALL@
+
+HEADERS =	block.h\
+		booter.h\
+		cbm.h\
+		config.h\
+		config_file.h\
+		convert.h\
+		copytail64.h\
+		mach.h\
+		main.h\
+		main_rev.h\
+		o5.h o5protocol.h\
+		protocol.h\
+		rdargs.h\
+		util.h\
+		config.h
+
+SOURCES	= 	bl_block.c\
+		bl_serial.c\
+		cbm_directory.c\
+		cbm_zipcode.c\
+		config_file.c\
+		convert.c\
+		mach.c\
+		main.c\
+		o5_disk.c\
+		o5_file.c\
+		o5_memory.c\
+		o5_server.c\
+		o5_simple.c\
+		pr_protocol.c\
+		pr_server.c\
+		pr_simple.c\
+		pr_support.c\
+		rdargs.c\
+		util.c
+
+MISC	=	configure\
+		mkinstalldirs\
+		install-sh\
+		aclocal.m4
+
+OBJS 	=	bl_block.o\
+		bl_serial.o\
+		cbm_directory.o\
+		cbm_zipcode.o\
+		config_file.o\
+		convert.o\
+		mach.o\
+		main.o\
+		o5_disk.o\
+		o5_file.o\
+		o5_memory.o\
+		o5_server.o\
+		o5_simple.o\
+		pr_protocol.o\
+		pr_server.o\
+		pr_simple.o\
+		pr_support.o\
+		rdargs.o\
+		util.o
+
+TARGET	=	over5
+
+$(TARGET): $(OBJS) $(HEADERS) Makefile
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $(TARGET) $(OBJS) $(LDFLAGS) $(LIBS)
+#
+# Build executable
+#
+all: $(TARGET)
+
+# build the distribution archive
+DISTDIR:=$(DISTDIR)/over5
+dist::
+	mkdir $(DISTDIR)
+	cp Makefile.in configure.in config.h.in configure ChangeLog README $(DISTDIR)
+	cp mkinstalldirs $(DISTDIR)
+	cp *.c *.asm $(DISTDIR)
+	cp block.h booter.h cbm.h config_file.h convert.h copytail64.h $(DISTDIR)
+	cp mach.h main.h main_rev.h o5.h o5protocol.h protocol.h $(DISTDIR)
+	cp rdargs.h util.h $(DISTDIR)
+	cp .over5rc over5.cfg $(DISTDIR)
+
+install: all
+	$(srcdir)/mkinstalldirs $(bindir)
+	$(INSTALL) $(TARGET) $(bindir)
+	$(STRIP) $(bindir)/$(TARGET)
+#	cp $(srcdir)/.over5rc $(HOME)
+
+uninstall:
+	$(RM) $(bindir)/$(TARGET)
+#
+# Remove executables and object files and backup files
+#
+clean:
+	$(RM) *.o *~ $(OBJS) $(TARGET) core
+#
+# Make things look nice for distribution
+#
+distclean: clean
+	$(RM) config.cache config.log config.status
+	$(RM) config.cross.cache
+	$(RM) Makefile config.h
+
+# Automatic re-running
+${srcdir}/configure: configure.in aclocal.m4
+	cd ${srcdir} && autoconf
+
+# eof

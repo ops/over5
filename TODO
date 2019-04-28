@@ -1,0 +1,128 @@
+TODO:
+
+* Priority 1 *
+
+- cbm: clean up memslave code.
+
+- cbm: fastrs20 shall properly set memtop, such that basic recognizes it
+
+* Priority 2 *
+
+- cbm: serfile/memslave kernal (patch)
+
+- cbm: make memslave flash in kernal, but not serfile. (a flag?)
+
+- make GPL or BSD
+
+- fix bindist dependencies (tlrreloc)
+
+* Priority 3 *
+
+- revise documentation
+
+- cbm: code a neat-oh startup screen
+
+- cbm: code some test stubs (a disk, a file)
+
+- cbm: a more compact memslave version?
+
+- cbm: make memslave work under kernal
+
+- cbm: make memslave work with overlapping moves.
+
+* Unprioritized *
+
+- over5: handle missing config file in a better way.
+
+- over5: fix a general mapping of filenames between host/inferior.
+
+- over5: change to getopt_long() or getopt() atleast.
+
+- over5: fix serial startup, better flushing
+
+- over5: split over5 server into a separate binary
+
+- over5: server: handle non case sensitive filenames on systems that are
+         case sensitive.  
+
+- over5: server: mount .d64's.
+
+- over5: server: Auto parse .p00, .prg, etc...
+
+- over5: tcp/ip support, for use with generic serial proxy.
+
+- over5: tcp/ip serial proxy server, with break and baud rate fix.
+
+- over5: handle d64's with error info
+
+- cbm: optimize!!!
+
+- cbm: vic20 version
+
+- cbm: add some kind of ident-string to the protocol
+
+- cbm: buffersize limit
+ 
+- cbm: do real safe uninit in bl_block.asm
+
+- cbm: kill potential problem with readmessage using BASIC calls in
+  serfile.  (the check for break)
+
+- cbm: try to fix problems with turbos like AR IV
+
+- include a better reference on how to make an interface.
+
+- better error reporting
+
+- Improve autoconf support!
+
+
+IDEAS:
+
+- cbm: program a cache system for drive code.  If drive code is already
+  in drive... use it.
+
+- cbm: a copy safe on exit (copy program up under kernal)
+
+- cbm: parallel port support
+
+- cbm: swiftlink/SilverSurfer/Turbo232 support
+
+- cbm: error info writing, error info reading.
+
+- cbm: improve disk handling
+
+- cbm: faster trackwrite
+
+- cbm: remake file support by making it sector based in some way,
+       not needing so much buffers.
+
+- cbm: Make drive talk/listen via the inferior directly to the host
+  (major work!!!!!!)
+
+- support for long files
+
+- !!Do major reorganization of code!!
+
+
+CARTRIDGE:  (This is probably not going to happen!)
+
+- make new hardware.
+
+- document
+
+- fix init bug in cartridge!!!
+
+- serfile for cartridge
+
+- better monitor for cartride
+
+- fix memswitching in cartridge
+
+- RESET should have option to go to basic directly!
+
+
+EOF
+
+
+

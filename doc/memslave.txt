@@ -1,0 +1,31 @@
+memslave
+--------
+  memslave is a memory server for the C64/VIC20.  It supports the following
+over5 protocols: READMEM, WRITEMEM, SYS & RUN.   RESET is supported if
+additional hardware is added (see interface.txt for details). 
+
+USAGE:
+  Load and run.
+Initially memslave will locate itself at $c500-$cfff.
+
+At the menu:
+- Pressing <space> will enter the server mode, and start waiting for commands.
+- Pressing 'p' will install a reset patch.  When the patch is installed,
+  memslave will enter server mode directly after a reset.
+  Holding down <space> during reset will do a normal reset.
+  Holding down '<-' during reset will bring up the menu.
+- Pressing 'r' will allow you to relocate memslave to any page in memory.
+  Note: No part of memslave may be in the areas $0000-$07ff, $a000-$bfff or
+  $d000-$ffff!
+
+To restart after reset or similar, type 'SYS 2069'.
+(SYS 51200 for MemSlaveC800)
+
+
+System requirements:
+
+  Over5 64binaries should run on any c64 or c128(in c64 mode), although it
+has only been tested on an old c64 with, and without TFC III.  If you find
+bugs or have suggestions about how to make any of the programs better please
+send a bugreport and/or a list of suggestions to the address at the end of
+this text.

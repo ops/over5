@@ -1,0 +1,3 @@
+2002-05-12  Daniel Kahlin <daniel@kahlin.net>
+	* tlrpatch.c: supports, and always creates, 4 zero bytes as
+	 end marker.

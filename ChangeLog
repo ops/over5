@@ -1,0 +1,29 @@
+2002-05-12  Daniel Kahlin <daniel@kahlin.net>
+	* doc/interface.txt: Added schematics for different interfaces,
+	added schematic and preliminary specification for the reset patch.
+
+2002-05-07  Daniel Kahlin <daniel@kahlin.net>
+	* Added an initial 'make dist & make distclean'
+
+2000-08-18  Andreas Andersson <e92_aan@e.kth.se>
+
+	* Fixed really, _really_ stupid bug in SerRead.
+	(I had commented out the code that sets two stopbits.)
+	Kludged around the 'no copy to .' bug. Not very pretty.
+	The Linux version is much faster now:
+	readdisk ~2.40 min, writedisk ~4.45 min.
+
+2000-08-17  Andreas Andersson <e92_aan@e.kth.se>
+
+	* Autoconf for the host program seems to work.
+	Fixed some problems with a nonblocking tcdrain();
+	Some (very) minor documentation updates.
+
+2000-01-28  Daniel Kahlin  <daniel@kahlin.net>
+
+	* Added and updated lots of things.  Most of the over 0.711
+	should be included now, lets start the work.
+
+2000-01-12  Daniel Kahlin  <daniel@kahlin.net>
+
+	* ChangeLog: Added a proper ChangeLog

@@ -1,0 +1,24 @@
+over5 NEWS -- history of user-visible changes.  2002-05-07
+
+Please send over5 bug reports to <over5@kahlin.net>.
+
+Version 0.712
+
+* memslave is now runtime(!) relocatable.
+
+* memslave has the option to install a reset server.
+
+* the VIC-20 version of fastrs is now completely relocatable.
+
+* fixed the bug that prevented SIMPLEREAD working on Win32 systems.
+
+* fixed the bug that required the current directory to be writeable
+  when running over5 in server mode. 
+
+* autoconf support, works on atleast Unix systems and Win32 systems
+ (using MinGW32)
+
+* completely new directory structure
+
+* added this NEWS file and a ChangeLog
+

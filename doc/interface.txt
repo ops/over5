@@ -1,0 +1,155 @@
+
+Short description of a level converter:
+
+the userport of the C64/VIC20 does not fully support RS232C voltages.
+
+        "real RS232C"   C64/VIC20
+
+mark     -12 volts     +5 volts
+space    +12 volts      0 volts
+
+The converter has to translate these voltages.  It also has to have a
+C64/VIC20 userport connector in one end and a standard RS232 connector
+(DSUB-25) in the other.
+
+For over5 to work it does NOT have to support handshaking-lines
+(CTS/RTS), only data in/out (RxD, TxD) are needed, although it may be
+nice to have them if you want to use other applications.
+
+
+These level converters were commercially availible from serveral companies.
+Commodore has made one. (VIC-1011A RS232C)  In Sweden the 'Handic V24' was
+popular.  There also exists several schematics on this type of interface.
+
+All of them plugs into the userport, and are fairly simple. (consists of
+only a few components.)
+
+
+Handic V24
+----------
+  I personally use a 'Handic V24' with the switch settings below, together
+with a standard null-modem cable (of the shelf at my local computer dealer).
+'Handic V24' settings:
+  CTS (4) down
+  MODEM/PRINTER (3) down
+  MODEM/PRINTER (2) up
+  MODEM/PRINTER (1) up
+
+VIC-1011A RS232C
+----------------
+http://www.ntrautanen.fi/computers/commodore/  /* picture of the interface */
+  <place info here!>
+
+DIY RS-232 Interface
+--------------------
+This was originally taken from a Usenet posting in comp.sys.cbm by
+Andreas Boose, and enchanced with references.
+NOTE: This should work, and every effort has been made for it to be
+correct, but I make no guarantees.
+
+C64/VIC20 to RS232 Interface
+
+    [P1]                                                   [P2]
+Userport C64/VIC20         [IC1]                     C64/VIC20 RS232
+                         _________
+                        |         |
+   PA2 (M)-----------11-|         |-14------------------- TXD (2)
+   PB1 (D)-----------10-|         |--7------------------- RTS (4)
+   PB6 (K)-----------12-| MAX 232 |-13------------------- CTS (5)
+ FLAG2 (B)---*--------9-|         |--8------------------- RXD (3)
+   PB0 (C)---|          |         |--3--|+-| [C1]
+   VCC (2)-----------16-|         |--1-----|
+   GND (N)------*----15-|         |
+           [C3] *--|+-2-|         |--5--|+-| [C2]
+           [C4] *--+|-6-|_________|--4-----|
+                |
+                |---------------------------------------- GND (7)
+
+ -|+- capacitor 22uF/16V
+ -  +
+
+Bill of Materials:
+  IC1, Integrated Circuit, Maxim MAX232, http://www.maxim-ic.com/
+  C1-C4, Capacitor, 22uF/16Volt, tantalum
+  P1, Card Edge Connector, 24 (2x12) pin, 3.96mm (1.56inch) spacing
+  P2, D-SUB 25 Connector (Male)
+
+References:
+  - Maxim, "MAX220-MAX249 +5V-Powered, Multichannel RS-232 Drivers/Receivers", Datasheet, 19-4323; Rev 10; 8/01 (http://pdfserv.maxim-ic.com/arpdf/MAX220-MAX249.pdf), Figure 5, Page 17 
+
+
+Automatic Reset (optional)
+--------------------------
+  As an extra feature, over5 supports sending a long break for resetting the
+C64/VIC20. (an RS232 break is when the the line is held as SPACE for longer
+than the duration of one byte)
+This simply circuit may be easily added to any of the above interfaces.
+For over5 the break is specified to be between 1 and 2 seconds long.  The
+reset circuitry must assert a reset after x milliseconds, and hold it for
+a maximum of x milliseconds.
+This assures that software may see if it's resetted by break, by checking
+RxD after reset. If RxD has not been deasserted with in x milliseconds, a normal reset should proceed anyway, because RxD might be stuck low for some reason.
+
+Userport C64/VIC20
+
+              C Q1 (NPN)
+ _RESET (3)----\                                                   IC1e
+                \| B                R3                           10 /|
+                 |-----------------[47k]---------------------------O |----|
+              E /|                                                  \| 11 |
+         |-----/        IC1f                                              |
+         |              |\ 12                                             |
+ VCC (2)-|-----*--------| O------ NOT CONNECTED                           |
+         |     |     13 |/                                                |
+         |     |                                                          |
+         | IC1a|         D1                        C2                     |
+         |   14|     |---|<---|    IC1b     IC1c   100n            IC1d   |   
+         |    |\  2  |   R1   |    |\  4    |\  6  ||              |\  8  |   
+ PB0 (C)-|----| O----*-[680k]-*----| O------| O----||---*----*-----| O----|
+         |  1 |/              |  3 |/     5 |/     ||  -|-   |   9 |/
+         |     | 7      C1   ---                   R2  | |  -|-
+         |     |        330n ---                   330k| |  /_\ D2
+         |     |              |                        -|-   |
+ GND (N)-*-----*--------------*-------------------------*----*------------
+
+Bill of Materials:
+  IC1, Integrated Circuit, 74HC14
+  Q1, Transistor, BC548
+  C1, Capacitor, 330n
+  C2, Capacitor, 100n
+  D1-D2, Diode, 1N4148
+  R1, Resistor, 680k
+  R2, Resistor, 330k
+  R3, Resistor, 47k
+
+Extras:
+- If  you need a reset button aswell you may add it between pin 3 and
+  pin N in the user port connector.  (or emitter and collector on Q1)
+- A disable switch may be accomplished by adding a switch between the
+  emitter and base on Q1.  When the switch is closed, automatic reset
+  cannot occur.
+
+Circuit Description:
+(1)
+- When PB0 is low (break) C1 is charged through R1.
+  When the trip point for IC1b is reached, its output goes low, which
+  in its turn will make IC1c's output go high.
+- When PB0 is high (normal) C1 is discharged quickly through D1.
+This adds up to make IC1c's output go high, only if a long enough low is
+present at PB0.
+
+(2)
+- When IC1c's output goes high, IC1d will immediately go past its trip point
+  to produce a low output level, which will in its turn produce a high output
+  on IC1e, which makes Q1 pull _RESET low.
+  C2 will then charge through R2, and eventually fall below IC1d's trip point
+  at the time which IC1d will go high again, making IC1e's output low, making
+  Q1 release _RESET.
+- When IC1c's output goes low, D2 will clamp the negative spike passing
+  through C2, such that IC1d's input will not be damaged.
+This together with (1) adds up to generating a short pulse when a break
+is detected.
+
+Happy computing...
+/Daniel Kahlin <daniel@kahlin.net>
+

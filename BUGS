@@ -1,0 +1,53 @@
+Remember that this is a BETA version.  It contains bugs, some of which may
+be major.  I am currently working on new versions of this program, but if
+noone shows interest in this I might stop.  An email with some constructive
+critisism will help me alot!
+
+Possible bugs:
+
+  - wildcards are case sensitive, even for cbm filenames and cbm
+    filenames are always uppercase. (if no wildcards are used, lowercase
+    is ok though)
+
+  - the current directory ('.') must be specified as './', otherwise 
+    copy will fail.
+
+  - there may be a problem with using the fileturbo together with a 
+    Commodore 1571 drive.  The last byte of some disk blocks may be
+    incorrectly transferred. (If you have a 1541, Pitch's bug section
+    below doesn't apply.)
+
+  - Some diskturbos, like the one i AR IV leaves the serial pins in a mess
+    after loading.  Mainly a problem with SERVER.  To solve this.  If
+    serfile times out, just restart the server on the host.
+
+  - Over5 SERVER may have to be started twice in a row to work properly.
+
+  - The booter might freeze if a BASIC patch is installed, like AR IV.
+    please turn OFF cartridges before booting.
+
+  - fileturbo does not work with two or more units on the IEC bus.
+
+  - SerFile looks dead during transfer. (screen blanked, no flashing)
+    This is normal!
+
+  - You MUST initialize the disk before doing WRITEDISK or READDISK
+
+  - You may need to init drive after formatting and/or writing disk-
+    ('over5 COMMAND i0')
+
+  - trackturbo will make the 1541 driveled flash kind of funny. (historical 
+    reasons :-)
+
+  - COPY will not accept 'Over5 COPY 8:xx#? ram:t' where 'ram:t' is a
+    directory.  Use 'Over5 COPY 8:xx#? ram:t/' instead.
+
+  - COPY accepts 'Over5 COPY apa#? 8:rajraj/'.  You may see this as an odd
+    feature.
+
+  - WRITEDISK eats its arguments in the wrong order. The 'FROM' and 'DEVICE'
+    arguments must switch places for it to work. This should only affect the
+    w32/*nix ports.
+
+Take care, out there!
+/Daniel Kahlin <daniel@kahlin.net>

@@ -1,0 +1,86 @@
+##########################################################################
+#
+# FILE  Makefile.in
+# Copyright (c) 2000,2002 Daniel Kahlin
+# Written by Daniel Kahlin <daniel@kahlin.net>
+# $Id: Makefile.in,v 1.6 2002/11/17 00:47:30 tlr Exp $
+#
+# DESCRIPTION
+#   This file will be processed automatically by ./configure to produce
+#   the file Makefile
+#
+######
+
+PACKAGE_ROOT=../..
+include	$(PACKAGE_ROOT)/package.mk ../common.mk
+
+all::	diskslave memslave serfile # cartslave
+
+diskslave:	ds_main.asm \
+		pr_filetransfer.asm pr_support.asm pr_rawdisktransfer.asm \
+		dsk_disk.asm dsk_diskturbo.asm dsk_disksector.asm \
+		dsk_pitchtrack.asm \
+                bl_block.asm
+	$(DASM) ds_main.asm -odiskslave -DPAL $(DASMFLAGS) 
+	$(DASM) ds_main.asm -odiskslave_NTSC -DNTSC $(DASMFLAGS)
+
+memslave:	ms_main.asm \
+		pr_memtransfer.asm pr_support.asm \
+		bl_block.asm 
+	$(DASM) ms_main.asm -omemslave_tmp -DPAL -DRELOC1=\$$0000 $(DASMFLAGS)
+	$(DASM) ms_main.asm -omemslave_0100_tmp -DPAL -DRELOC1=\$$0100 $(DASMFLAGS)
+	$(TLRRELOC) -r -b memslave_tmp memslave_0100_tmp reloc_tmp
+	$(DASM) ms_main.asm -omemslave_tmp -f3 -DPAL -DRELOC $(DASMFLAGS)
+	$(DASM) memslave.asm -omemslave -DPAL $(DASMFLAGS)
+	$(DASM) ms_main.asm -omemslave_tmp -DNTSC -DRELOC1=\$$0000 $(DASMFLAGS)
+	$(DASM) ms_main.asm -omemslave_0100_tmp -DNTSC -DRELOC1=\$$0100 $(DASMFLAGS)
+	$(TLRRELOC) -r -b memslave_tmp memslave_0100_tmp reloc_tmp
+	$(DASM) ms_main.asm -omemslave_tmp -DNTSC -f3 -DRELOC $(DASMFLAGS)
+	$(DASM) memslave.asm -omemslave_NTSC -DNTSC $(DASMFLAGS)
+	rm -f memslave_tmp memslave_0100_tmp reloc_tmp
+
+serfile:	sf_main.asm \
+		pr_serfile.asm pr_support.asm \
+		bl_block.asm
+	$(DASM) sf_main.asm -oserfile -DPAL $(DASMFLAGS)
+	$(DASM) sf_main.asm -oserfile_NTSC -DNTSC $(DASMFLAGS)
+
+cartslave:	cs_main.asm \
+		pr_memtransfer.asm pr_filetransfer.asm pr_support.asm \
+		pr_serfile.asm pr_rawdisktransfer.asm \
+		dsk_disk.asm dsk_diskturbo.asm dsk_disksector.asm \
+		dsk_pitchtrack.asm \
+		bl_block.asm
+	$(DASM) cs_main.asm -ocartslave -DPAL $(DASMFLAGS)
+	$(DASM) cs_main.asm -ocartslave_NTSC -DNTSC $(DASMFLAGS)
+
+# build the distribution archive
+DISTDIR:=$(DISTDIR)/servers
+dist::
+	mkdir $(DISTDIR)
+	cp Makefile.in README $(DISTDIR)
+	cp *.asm *.i $(DISTDIR)
+
+# build the binary distribution
+bindist::	all
+	cp diskslave $(DISTROOT)/bin-c64-pal/
+	cp diskslave_NTSC $(DISTROOT)/bin-c64-ntsc/
+	cp memslave $(DISTROOT)/bin-c64-pal/
+	cp memslave_NTSC $(DISTROOT)/bin-c64-ntsc/
+	cp serfile $(DISTROOT)/bin-c64-pal/
+	cp serfile_NTSC $(DISTROOT)/bin-c64-ntsc/
+
+# clean out old targets
+clean::
+	rm -f *~ \#*\#
+	rm -f a.out
+	rm -f diskslave diskslave_NTSC
+	rm -f memslave memslave_NTSC
+	rm -f cartslave cartslave_NTSC
+	rm -f serfile serfile_NTSC
+
+# clean for dist
+distclean:: clean
+	rm -f Makefile
+
+# eof

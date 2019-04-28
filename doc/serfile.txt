@@ -1,0 +1,58 @@
+serfile
+-------
+  serfile uses a PC as a harddisk for your C64/VIC20.  (run 'over5 server'
+on the PC)
+
+USAGE:
+  Load and run.
+Now it is installed ($f600-$ffff)
+
+Commands:
+
+  'LOAD "<FILENAME>",6'
+  '#L"<FILENAME>"'
+  '/ "<FILENAME>"' or '/<FILENAME>'
+Loads the file from the server into memory.
+
+  'SAVE "<FILENAME>",6'
+  '#S"<FILENAME>"'
+Saves file from memory to the server.
+
+  '#C"<COMMAND>"'
+  '."<COMMAND"' or '.<COMMAND>'
+Sends command to the server. ('#$' can be used instead of '#C"$"')
+
+  '#C"DIR"'
+  '#C"$"'
+  '#$'
+  '$'
+  '.$'
+Displays the files in the current directory.
+
+  '#C"CD"'
+  '.CD'
+Displays the name of the current directory.
+
+  '#C"CD <dir>"'
+  '.CD <dir>'
+Set the current directory to <dir>.
+
+Please refer to over5.txt for additional '#C' commands.
+
+  '#K'
+Uninstalls serfile.
+
+The '#L', '/' and '#S' commands are slightly better than 'LOAD' / 'SAVE' because
+they do not use BASIC variable storage to store the filename.  (i.e they do
+not trash memory just below $a000)
+
+SerFile looks dead during transfer. (screen blanked, no flashing)
+This is normal!  I will make it flash a bit in late versions.
+
+
+System requirements:
+
+  serfile should run on any c64 or c128(in c64 mode), although it has only
+been tested on an old c64 with, and without TFC III.  If you find bugs or
+have suggestions about how to make any of the programs better please send
+a bugreport and/or a list of suggestions to <over5@kahlin.net>.

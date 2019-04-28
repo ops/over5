@@ -1,0 +1,121 @@
+Kernal research
+
+
+*e4ec-e4ff rs-232 timings PAL
+*eebb-f0bc rs-232
+*f14a-f154 rs-232 in GETIN
+*f175-f1b4 tape in BASIN
+*f1b8-f1c9 rs-232 in BASIN
+*f1db-f207 tape in BSOUT
+*f208-f20d rs-232 in BSOUT
+*f223-f236 tape (and rs-232) in CHKIN
+*f268-f278 tape (and rs-232) in CKOUT
+*f2a7-f2df tape (and rs-232) in CLOSE
+*f384-f3d4 tape in OPEN
+*f409-f49d rs-232 in OPEN
+*f533-f5a7 tape in LOAD
+*f659-f68e tape in SAVE
+*f72c-fce1 tape
+*fe72-febb rs-232 NMI
+*fec2-feb5 rs-232 timings NTSC
+*fec2-ff47 rs-232
+
+
+Patches:
+
+* standard patch area
+e4b7-e4d9=aa	;normal kernel patch area
+
+* RS232 timings PAL
+e4ec-e4ff=ea	;empty
+
+* No check for RS232 ended!
+ed0e=2c,a9,24	;bit $24a9
+
+* RS232 routines
+eebb-f0bc=ea	;empty
+
+* Messages 'press play on tape' and 'press record & play on tape'
+f0d8-f105=ea	;empty
+
+* skip RS232 in GETIN
+f140=d0,24	;bne $f166
+
+* RS232 in GETIN
+f14a-f154=ea	;empty
+
+* return CR if a bogus read from RS232 or tape occurs
+f175=a9,0d,60	;lda #$0d; rts
+
+* tape in BASIN
+f178-f1ac=ea	;empty
+
+* RS232 in BASIN
+f1b8-f1c9=ea	;empty
+
+* Don't accept RS232 or tape in BSOUT
+f1db=4c,07,f7	;jmp $f707 (device not present)
+
+* tape and RS232 in BSOUT
+f1de-f20d=ea	;empty
+
+* Don't accept RS232 or tape in CHKIN
+f223=4c,07,f7	;jmp $f707 (device not present)
+
+* tape in CHKIN
+f226-f232=ea	;empty
+
+* Don't accept RS232 or tape in CKOUT
+f268=4c,07,f7	;jmp $f707 (device not present)
+
+* tape in CKOUT
+f26b-f274=ea	;empty
+
+* Don't accept RS232 or tape in CLOSE
+f2a7=4c,07,f7	;jmp $f707 (device not present)
+
+* RS232 and tape in CLOSE
+f2aa-f2ed=ea	;empty
+
+* Don't accept RS232 or tape in OPEN
+f384=4c,13,f7	;jmp $f713 (illegal device number)
+
+* tape in OPEN
+f387-f3d2=ea	;empty
+
+* RS232 in OPEN
+f409-f49d=ea	;empty
+
+* Don't accept RS232 or tape in LOAD
+f4b6=90,f7	;bcc $f4af (illegal device number)
+
+* tape in LOAD
+f533-f5a7=ea	;empty
+
+* Don't accept RS232 or tape in SAVE
+f5f8=90,f7	;bcc $f5f1 (illegal device number)
+
+* tape in SAVE
+f659-f68b=ea	;empty
+
+* general tape routines
+f72c-fb8d=ea	;empty
+
+* general tape routines
+fb97-fcbc=ea	;empty
+
+* IRQ vectors
+fd9b=31,ea,31,ea,31,ea,31,ea	;IRQ vectors
+
+* remove RS232 from NMI
+fe54=30,60	;bmi $feb6
+
+* RS232 NMI routine exit quick
+fe72=4c,b6,fe	;jmp $feb6
+
+* RS232 in NMI
+fe75-feb5=ea	;empty
+
+* RS232
+fec2-ff47=ea	;empty
+

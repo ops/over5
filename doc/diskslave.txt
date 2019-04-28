@@ -1,0 +1,22 @@
+diskslave
+---------
+  diskslave is a disk server for the C64/VIC20 and 1541.  It supports
+the following over5 protocols: READFILE, WRITEFILE, COPY, DIR, STATUS,
+COMMAND, READDISK, WRITEDISK, READZIP, WRITEZIP and TEST.
+It includes diskturbo for: read/writefile, read/writedisk read/writezip
+and fastformat.
+The diskturbo code can be switched off at the menu.
+You can turn off verify if you really want to.  I do NOT recommend this!
+Pressing <RESTORE> returns to menu.
+
+USAGE:
+  Load and run.
+To restart after reset or similar, type 'SYS 2069'.
+
+System requirements:
+
+  Over5 64binaries should run on any c64 or c128(in c64 mode), although it
+has only been tested on an old c64 with, and without TFC III.  If you find
+bugs or have suggestions about how to make any of the programs better please
+send a bugreport and/or a list of suggestions to the address at the end of
+this text.

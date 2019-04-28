@@ -1,0 +1,16 @@
+README.win32
+------------
+
+Compiling under win32 may be tricky...
+
+Preferably you build this using MinGW (http://www.mingw.org/).  This
+may for example be done in the following ways:
+- natively under Windows using Cygwin (http://sources.redhat.com/cygwin/)
+- natively under Windows MSYS (http://www.mingw.org/msys.shtml)
+- Using a GNU/Linux (*nix) hosted cross compiler.
+ (for example http://www.devolution.com/~slouken/SDL/Xmingw32/)
+
+- Installer build: http://www.jrsoftware.org/isinfo.php
+
+
+

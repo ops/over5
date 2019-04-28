@@ -1,0 +1,49 @@
+2002-05-07  Daniel Kahlin <daniel@kahlin.net>
+	* main.c: Fixed silly bug that made over5 think that the serial
+	port couldn't be opened when it really could.
+	* bl_serial.c: Kludged around the SIMPLEREAD bug on win32.  It
+	seems that SerRead doesn't work with a serial buffer size less
+	than the chunk to be read(!)
+	* over5.cfg: Default to COM1, use CR/LF.
+
+2002-05-04  Daniel Kahlin <daniel@kahlin.net>
+	* mach_include.h: Removed.
+	* config.h.in: Stuff from mach_include.h moved here.
+	* Removed _alot_ of unnecessary #includes from everywhere!
+
+2002-05-03  Daniel Kahlin <daniel@kahlin.net>
+	* Converted to tabsize=4 (most of it was already)
+	* util.c util.h: created file for collecting the various utilty
+	functions that was lying around in main for example.
+
+2002-05-02  Daniel Kahlin <daniel@kahlin.net>
+	* Stripped out AMIGA_VERSION code. (most of it wasn't there anyway)
+	* Stripped out APTR and STRPTR.
+	* Improved building. Cross MinGW32 build works, warnings removed.
+	* Cosmetics.
+	* main.c: Added aliases for the sub commands. 
+	* pr_server.c: Tempfile now has an absolute path in a temporary
+	directory. 
+
+2000-08-18  Andreas Andersson <e92_aan@e.kth.se>
+
+	* Fixed really, _really_ stupid bug in SerRead.
+	(I had commented out the code that sets two stopbits.)
+	Kludged around the 'no copy to .' bug. Not very pretty.
+	The Linux version is much faster now:
+	readdisk ~2.40 min, writedisk ~4.45 min.
+
+2000-08-17  Andreas Andersson <e92_aan@e.kth.se>
+
+	* Autoconf for the host program seems to work.
+	Fixed some problems with a nonblocking tcdrain();
+	Some (very) minor documentation updates.
+
+2000-01-28  Daniel Kahlin  <daniel@kahlin.net>
+
+	* Added and updated lots of things.  Most of the over 0.711
+	should be included now, lets start the work.
+
+2000-01-12  Daniel Kahlin  <daniel@kahlin.net>
+
+	* ChangeLog: Added a proper ChangeLog

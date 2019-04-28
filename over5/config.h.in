@@ -1,0 +1,172 @@
+
+/* Define if type char is unsigned and you are not using gcc.  */
+#ifndef __CHAR_UNSIGNED__
+#undef __CHAR_UNSIGNED__
+#endif
+
+/* Define to empty if the keyword does not work.  */
+#undef const
+
+/* Define if you don't have vprintf but do have _doprnt.  */
+#undef HAVE_DOPRNT
+
+/* Define if your system has a working fnmatch function.  */
+#undef HAVE_FNMATCH
+
+/* Define if you support file names longer than 14 characters.  */
+#undef HAVE_LONG_FILE_NAMES
+
+/* Define if you have the vprintf function.  */
+#undef HAVE_VPRINTF
+
+/* Define as the return type of signal handlers (int or void).  */
+#undef RETSIGTYPE
+
+/* Define if you have the ANSI C header files.  */
+#undef STDC_HEADERS
+
+/* Define if you can safely include both <sys/time.h> and <time.h>.  */
+#undef TIME_WITH_SYS_TIME
+
+/* The number of bytes in a char.  */
+#undef SIZEOF_CHAR
+
+/* The number of bytes in a int.  */
+#undef SIZEOF_INT
+
+/* The number of bytes in a long int.  */
+#undef SIZEOF_LONG_INT
+
+/* The number of bytes in a short int.  */
+#undef SIZEOF_SHORT_INT
+
+/* Define if you have these types */
+#undef int8_t
+#undef u_int8_t
+#undef int16_t
+#undef u_int16_t
+#undef int32_t
+#undef u_int32_t
+
+/* Define if you have the cfmakeraw function.  */
+#undef HAVE_CFMAKERAW
+
+/* Define if you have the getcwd function.  */
+#undef HAVE_GETCWD
+
+/* Define if you have the select function.  */
+#undef HAVE_SELECT
+
+/* Define if you have the strdup function.  */
+#undef HAVE_STRDUP
+
+/* Define if you have the strerror function.  */
+#undef HAVE_STRERROR
+
+/* Define if you have the usleep function.  */
+#undef HAVE_USLEEP
+
+/* Define if you have the <dirent.h> header file.  */
+#undef HAVE_DIRENT_H
+
+/* Define if you have the <fcntl.h> header file.  */
+#undef HAVE_FCNTL_H
+
+/* Define if you have the <limits.h> header file.  */
+#undef HAVE_LIMITS_H
+
+/* Define if you have the <ndir.h> header file.  */
+#undef HAVE_NDIR_H
+
+/* Define if you have the <strings.h> header file.  */
+#undef HAVE_STRINGS_H
+
+/* Define if you have the <sys/dir.h> header file.  */
+#undef HAVE_SYS_DIR_H
+
+/* Define if you have the <sys/ndir.h> header file.  */
+#undef HAVE_SYS_NDIR_H
+
+/* Define if you have the <sys/time.h> header file.  */
+#undef HAVE_SYS_TIME_H
+
+/* Define if you have the <unistd.h> header file.  */
+#undef HAVE_UNISTD_H
+
+/* Define if you have the iberty library (-liberty).  */
+#undef HAVE_LIBIBERTY
+
+#ifndef FALSE
+#define FALSE 0L
+#endif
+#ifndef TRUE
+#define TRUE -1L
+#endif
+#ifndef NULL
+#define NULL 0L
+#endif
+#ifdef UNICODE
+#undef UNICODE
+#endif
+
+extern char *_program;
+extern char *_package_ver;
+
+/*
+ * __MINGW32__ means that this should be compiled for the MinGW32 api.
+ *
+ * WIN32_VERSION means that devices, filenames and general behaviour
+ * shall be in a Windows-like manner.
+ *
+ * LINUX_VERSION means that devices, filenames and general behaviour
+ * shall be in a Unix-link manner.
+ */
+#ifdef __MINGW32__
+#define WIN32_VERSION
+#else
+#define LINUX_VERSION
+#endif
+
+/*
+ * this string must be in such a way that appending a name will generate
+ * a complete absolute reference to that file. (usually this only means the
+ * path must end with a slash)
+ */
+#ifdef WIN32_VERSION
+#define TMPDIR "C:/TEMP/"
+#endif
+#ifdef LINUX_VERSION
+#define TMPDIR "/tmp/"
+#endif
+
+#ifdef LINUX_VERSION
+/* Some 'useful' defaults */
+#define CFG_FILE     ".over5rc"
+#define DEFAULT_PORT "/dev/ttyS0"
+#define BREAK_DURATION 2 /* For a break length of 0.5 to 1.0 seconds */ 
+#define TIMEOUT_TICKS_PER_SECOND 4 /* Granularity of timeout counter */
+
+/* They are probably around somewhere */
+#define FILE_ATTRIBUTE_NORMAL -1
+#define FILE_ATTRIBUTE_DIRECTORY 1
+
+/* Ugly but effective... */
+#define BOOL int
+#define DWORD u_int32_t
+#endif /* LINUX_VERSION */
+
+/*
+ * MinGW32 has min and max.
+ */
+#ifndef __MINGW32__
+/* min and max */
+#define max(a,b) ((a) > (b) ? (a) : (b))
+#define min(a,b) ((a) < (b) ? (a) : (b))
+#endif /* !__MINGW32__ */
+
+
+#ifndef chkabort
+#define chkabort() ;
+#endif
+
+/* eof */

@@ -1,0 +1,53 @@
+/*************************************************************************
+ *
+ * FILE  config.h.in
+ * Copyright (c) 2002 Daniel Kahlin
+ * Written by Daniel Kahlin <danie@kahlin.net>
+ * $Id: config.h.in,v 1.2 2002/04/27 23:36:18 tlr Exp $
+ *
+ * DESCRIPTION
+ *   This file will be processed automatically by ./configure to produce
+ *   the file config.h
+ *
+ ******/
+
+/* filled in by ./configure ---> */
+
+/* Define if you have standard C headers */
+#undef STDC_HEADERS
+
+/* Define if you have unistd.h */
+#undef HAVE_UNISTD_H
+
+/* types that may be missing */
+#undef u_int32_t
+#undef uint32_t
+
+/* define empty if compiler does not support const */ 
+#undef const
+
+/* Define if machine is bigendian */
+#undef WORDS_BIGENDIAN
+
+/* Define if you have vprintf() */
+#undef HAVE_VPRINTF
+
+/* Define if you have strtoul() */
+#undef HAVE_STRTOUL
+
+/* <--- filled in by ./configure */
+
+#ifndef FALSE
+#define FALSE 0L
+#endif
+#ifndef TRUE
+#define TRUE -1L
+#endif
+#ifndef NULL
+#define NULL 0L
+#endif
+
+extern char *_program;
+extern char *_package_ver;
+
+/* EOF */

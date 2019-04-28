@@ -1,0 +1,32 @@
+fastrs
+------
+  fastrs is a memory transferrer for the C64/VIC20, much like a tapeturbo,
+It supports the following over5 protocols: SIMPLEREAD and SIMPLEWRITE. 
+
+  fastrs for the C64 will install itself to $02bb-$02f9 and $fc00-$ffff. 
+
+  fastrs for the VIC20 will install itself to $02bb-$02ca and 
+MEMTOP-$0400 - MEMTOP (which is $5c00-$5fff on a 16KB expanded VIC20)
+
+USAGE:
+  Load and run.
+Now it is installed in memory.
+
+To receive:
+  type 'SYS 700'.  You will see the text 'WAITING...' and then
+the screen blanks.  Now type 'over5 SIMPLEWRITE <filename>' on the PC to
+send.
+
+To send:
+  Start 'over5 SIMPLEREAD <filename>' on the PC. It should tell you
+'Waiting...'.  Now type 'SYS 703' on the C64/VIC20 to send.
+
+
+System requirements:
+
+  fastrs should run on any C64 or VIC20, although it has only been tested
+on an old C64 with, and without TFC III, and AR IV.  And a VIC20 with and
+without 16Kb memory expansion.
+If you find bugs or have suggestions about how to make any of the programs
+better please send a bugreport and/or a list of suggestions to
+<over5@kahlin.net>.

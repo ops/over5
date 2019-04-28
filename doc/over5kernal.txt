@@ -1,0 +1,33 @@
+over5kernal
+-----------
+  over5kernal is a kernal extension for the C64 computer.  It replaces
+tape and old RS-232 support in the original kernal with serfile, memslave,
+and a number of useful other function.
+
+USAGE
+  Powering up the computer, or pressing an optional reset button, starts
+your computer with over5 extensions installed.
+
+Holding down the following keys during power up or reset:
+- '<-' will immediately enter memslave server mode.
+- <space> will skip normal autostart cartridge check and do reset.
+- <ctrl> will flash the screen indefinately.
+
+If RxD (PA0, bit 0 of $DD01) is held low during reset (signalling a break),
+the kernal will wait 400ms for it to go high (signalling that the break
+ended).  If it goes high, memslave server mode will be entered.  If it stays
+low, it is assumed to be stuck for some reason, and a normal reset will
+follow.
+
+
+
+SEE ALSO
+  memslave.txt, serfile.txt
+
+System requirements:
+
+  Over5 64binaries should run on any c64 or c128(in c64 mode), although it
+has only been tested on an old c64 with, and without TFC III.  If you find
+bugs or have suggestions about how to make any of the programs better please
+send a bugreport and/or a list of suggestions to the address at the end of
+this text.

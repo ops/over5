@@ -1,0 +1,7 @@
+TODO
+
+- switch to set cbm mode.  ($ instead of 0x, load address)
+
+- support for merging patches
+
+- support for ips output.

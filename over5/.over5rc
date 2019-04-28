@@ -1,0 +1,6 @@
+# .over5rc
+
+DEVICE=8	;cbm device number
+SERIALDEVICE=/dev/ttyS0
+
+# eof
