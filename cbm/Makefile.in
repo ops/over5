@@ -35,13 +35,14 @@ prebindist::
 
 # clean out old targets
 clean::	subdirs
-	rm -f *~ \#*\#
+	$(RM) -f *~ \#*\#
 
 # clean for dist
 distclean:: clean
-	rm -f config.cache config.log config.status autom4te.cache
-	rm -f Makefile common.mk
-	rm -f *.tar.gz
+	$(RM) -f config.cache config.log config.status
+	$(RM) -f Makefile common.mk
+	$(RM) -rf autom4te.cache
+	$(RM) -f *.tar.gz
 
 # these are our subdirectories, they must be provided as dependencies
 # for everything that should propagate.

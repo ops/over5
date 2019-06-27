@@ -102,19 +102,20 @@ BINDISTNAME=$(PACKAGE)-$(VERSION)-$(OSTYPE)
 BINDISTDIR=/tmp/$(BINDISTNAME)
 bindist::	tlrpatch tlrdiff tlrlink tlrreloc
 	$(TAR) cf $(BINDISTNAME).tar tlrpatch tlrdiff tlrlink tlrreloc
-	rm -f $(BINDISTNAME).tar.gz
+	$(RM) -f $(BINDISTNAME).tar.gz
 	$(GZIP) -9 $(BINDISTNAME).tar
 
 # clean out old targets
 clean::
-	rm -f *.o
-	rm -f *~ \#*\# core
-	rm -f tlrpatch tlrdiff tlrlink tlrreloc
+	$(RM) -f *.o
+	$(RM) -f *~ \#*\# core
+	$(RM) -f tlrpatch tlrdiff tlrlink tlrreloc
 
 # clean for dist
 distclean::	clean
-	rm -f config.cache config.log config.status autom4te.cache
-	rm -f config.h Makefile
-	rm -f *.tar.gz
+	$(RM) -f config.cache config.log config.status
+	$(RM) -f config.h Makefile
+	$(RM) -rf autom4te.cache
+	$(RM) -f *.tar.gz
 
 # eof

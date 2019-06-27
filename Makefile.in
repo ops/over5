@@ -47,9 +47,9 @@ dist::	predist subdirs cbmbindist
 	cd /tmp; $(TAR) cf $(DISTNAME).tar $(DISTNAME); \
 	$(GZIP) -9 $(DISTNAME).tar
 	mv /tmp/$(DISTNAME).tar.gz .
-	rm -r $(DISTDIR)
+	$(RM) -r $(DISTDIR)
 predist::
-	rm -rf $(DISTDIR)
+	$(RM) -rf $(DISTDIR)
 	mkdir $(DISTDIR)
 
 cbmbindist::
@@ -58,13 +58,14 @@ cbmbindist::
 bindist:: subdirs
 
 distclean:: clean subdirs
-	rm -f config.cache config.log config.status autom4te.cache
-	rm -f Makefile
-	rm -f *.tar.gz
+	$(RM) -f config.cache config.log config.status
+	$(RM) -f Makefile
+	$(RM) -rf autom4te.cache
+	$(RM) -f *.tar.gz
 
 # clean out old targets
 clean::	subdirs
-	rm -f *~ \#*\# core
+	$(RM) -f *~ \#*\# core
 
 # these are our subdirectories, they must be provided as dependencies
 # for everything that should propagate.
