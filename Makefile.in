@@ -35,8 +35,8 @@ DISTNAME:=$(PACKAGE)-$(VERSION)
 DISTROOT:=/tmp/$(DISTNAME)
 DISTDIR:=$(DISTROOT)
 dist::	predist subdirs cbmbindist
-	cp configure configure.in install-sh Makefile.in package.mk $(DISTDIR)
-	cp README INSTALL DISCLAIMER BUGS AUTHORS TODO NEWS $(DISTDIR)
+	cp configure configure.ac install-sh Makefile.in package.mk $(DISTDIR)
+	cp README.md INSTALL DISCLAIMER BUGS AUTHORS TODO NEWS $(DISTDIR)
 	cp ChangeLog INSTALL.cbm $(DISTDIR)
 	cp boot.asc LICENSE README.win32 THANKS  $(DISTDIR)
 	mkdir $(DISTDIR)/doc
