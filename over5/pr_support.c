@@ -8,6 +8,8 @@
 **
 ******/
 
+#include <string.h>
+
 #include "config.h"
 
 #include "util.h"
