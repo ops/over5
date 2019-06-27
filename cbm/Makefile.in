@@ -39,7 +39,7 @@ clean::	subdirs
 
 # clean for dist
 distclean:: clean
-	rm -f config.cache config.log config.status
+	rm -f config.cache config.log config.status autom4te.cache
 	rm -f Makefile common.mk
 	rm -f *.tar.gz
 

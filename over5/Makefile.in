@@ -130,7 +130,7 @@ clean:
 # Make things look nice for distribution
 #
 distclean: clean
-	$(RM) config.cache config.log config.status
+	$(RM) config.cache config.log config.status autom4te.cache
 	$(RM) config.cross.cache
 	$(RM) Makefile config.h
 

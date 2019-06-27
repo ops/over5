@@ -58,7 +58,7 @@ cbmbindist::
 bindist:: subdirs
 
 distclean:: clean subdirs
-	rm -f config.cache config.log config.status
+	rm -f config.cache config.log config.status autom4te.cache
 	rm -f Makefile
 	rm -f *.tar.gz
 

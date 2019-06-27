@@ -100,7 +100,7 @@ dist::
 # build binary distribution archive
 BINDISTNAME=$(PACKAGE)-$(VERSION)-$(OSTYPE)
 BINDISTDIR=/tmp/$(BINDISTNAME)
-bindist::	tlrpatch tlrdiff tlrlink tlrreloc 
+bindist::	tlrpatch tlrdiff tlrlink tlrreloc
 	$(TAR) cf $(BINDISTNAME).tar tlrpatch tlrdiff tlrlink tlrreloc
 	rm -f $(BINDISTNAME).tar.gz
 	$(GZIP) -9 $(BINDISTNAME).tar
@@ -113,7 +113,7 @@ clean::
 
 # clean for dist
 distclean::	clean
-	rm -f config.cache config.log config.status
+	rm -f config.cache config.log config.status autom4te.cache
 	rm -f config.h Makefile
 	rm -f *.tar.gz
 
