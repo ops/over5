@@ -50,7 +50,7 @@ mandir = $(exec_prefix)/man
 .SUFFIXES: . .c .o
 # how to build .o from .c
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $< 
+	$(CC) $(CFLAGS) -c -o $@ $<
 %: %.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
@@ -91,7 +91,7 @@ DISTDIR:=$(DISTDIR)/tlrutils
 #DISTDIR=/tmp/$(DISTNAME)
 dist::
 	mkdir $(DISTDIR)
-	cp configure configure.in Makefile.in config.h.in $(DISTDIR)
+	cp configure configure.ac Makefile.in config.h.in $(DISTDIR)
 	cp ChangeLog TODO $(DISTDIR)
 	cp *.c util.h $(DISTDIR)
 	mkdir $(DISTDIR)/dasm

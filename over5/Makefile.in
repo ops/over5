@@ -105,7 +105,7 @@ all: $(TARGET)
 DISTDIR:=$(DISTDIR)/over5
 dist::
 	mkdir $(DISTDIR)
-	cp Makefile.in configure.in config.h.in configure ChangeLog README $(DISTDIR)
+	cp Makefile.in configure.ac config.h.in configure ChangeLog README.md $(DISTDIR)
 	cp mkinstalldirs $(DISTDIR)
 	cp *.c *.asm $(DISTDIR)
 	cp block.h booter.h cbm.h config_file.h convert.h copytail64.h $(DISTDIR)

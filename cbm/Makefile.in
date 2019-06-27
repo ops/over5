@@ -21,7 +21,7 @@ all::	subdirs
 # build the distribution archive
 DISTDIR:=$(DISTDIR)/cbm
 dist::	predist subdirs
-	cp Makefile.in configure.in configure common.mk.in ChangeLog $(DISTDIR)
+	cp Makefile.in configure.ac configure common.mk.in ChangeLog $(DISTDIR)
 predist::
 	mkdir $(DISTDIR)
 
