@@ -121,7 +121,7 @@ void *jalloc(int32_t len)
     if (!(ptr=malloc(len+4)))
 	panic("couldn't jalloc");
 
-    memset(ptr,len+4,0);
+    memset(ptr,0,len+4);
     *(u_int32_t *)ptr=len;
     return ((void *)(ptr+4));
 }
