@@ -6,6 +6,8 @@
 **
 ******/
 
+#include <stdint.h>
+
 /* cbm_zipcode.c */
 void dounzip(char *basename, char *path, u_int8_t *buffer);
 void dozip(char *basename, char *path, u_int8_t *buffer);

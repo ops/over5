@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <stdint.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -142,9 +143,9 @@ PROGRAM " " PACKAGE_VER "\n"
 
 int do_patch(char *file1, char *patch, char *outfile)
 {
-    u_int8_t *buf1, tmpbuf[256];
+    uint8_t *buf1, tmpbuf[256];
     FILE *fp1,*fp_patch;
-    u_int16_t base,addr,len;
+    uint16_t base,addr,len;
     int i;
 
     buf1=malloc(BUFSIZE);
@@ -198,9 +199,9 @@ int do_merge(char *patch1, char *patch2, char *outfile)
     int16_t patchbuffer[BUFSIZE];
     int16_t tmp;
     int start,end,total;
-    u_int8_t tmpbuf[256];
+    uint8_t tmpbuf[256];
     FILE *fp_patch,*fp_out;
-    u_int16_t base,addr,len;
+    uint16_t base,addr,len;
     int i,j,k;
     char *patchname;
     char *patcharray[]={patch1,patch2,NULL};

@@ -13,6 +13,7 @@
 #include "config.h"
 
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 #ifdef IRR_PROFILING
 #include <time.h>

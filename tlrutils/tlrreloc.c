@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <stdint.h>
 /*#include <string.h> */
 #include <unistd.h>
 #include <sys/types.h>
@@ -28,7 +29,7 @@ char *_package_ver=PACKAGE_VER;
 
 int verbose;
 
-int findreloc(char *file1, u_int16_t base1, char *file2, u_int16_t base2, char *outfile, int relativemode, int bytemode);
+int findreloc(char *file1, uint16_t base1, char *file2, uint16_t base2, char *outfile, int relativemode, int bytemode);
 
 /*************************************************************************
  *
@@ -140,14 +141,14 @@ PROGRAM " " PACKAGE_VER "\n"
     exit(ret);
 }
 
-int findreloc(char *file1, u_int16_t base1, char *file2, u_int16_t base2, char *outfile, int relativemode, int bytemode)
+int findreloc(char *file1, uint16_t base1, char *file2, uint16_t base2, char *outfile, int relativemode, int bytemode)
 {
     FILE *file1_fp,*file2_fp,*outfile_fp;
-    u_int8_t *buf1, *buf2;
+    uint8_t *buf1, *buf2;
     int len1, len2, len;
-    u_int16_t loadaddr1,loadaddr2;
-    u_int8_t msboffset,msbdiff,lsbdiff;
-    u_int8_t diff;
+    uint16_t loadaddr1,loadaddr2;
+    uint8_t msboffset,msbdiff,lsbdiff;
+    uint8_t diff;
     int i,last,rel;
 
     file1_fp=fopen(file1,"rb");

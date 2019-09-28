@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <stdint.h>
 /*#include <string.h> */
 /*#include <unistd.h> */
 #include <sys/types.h>
@@ -32,7 +33,7 @@ char *_package_ver=PACKAGE_VER;
 #define BUFBASE 0xe000
 
 void dumpbytes(unsigned char *buf, int start, int end, int offset);
-u_int8_t dowcrc(u_int8_t *data, int length, u_int8_t crc);
+uint8_t dowcrc(uint8_t *data, int length, uint8_t crc);
 
 int do_diff(int argc, char *argv[]);
 int do_patch(int argc, char *argv[]);
@@ -98,9 +99,9 @@ int do_merge(int argc, char *argv[])
 int do_patch(int argc, char *argv[])
 {
     char *file1, *patch, *outfile;
-    u_int8_t *buf1, tmpbuf[256];
+    uint8_t *buf1, tmpbuf[256];
     FILE *fp1,*fp_patch;
-    u_int16_t base,addr,len;
+    uint16_t base,addr,len;
     int i;
 
     file1=argv[1];
@@ -160,7 +161,7 @@ int do_diff(int argc, char *argv[])
     unsigned char *buf1,*buf2;
     FILE *fp1,*fp2;
     int start,end,total;
-    u_int16_t base;
+    uint16_t base;
 
     file1=argv[1];
     file2=argv[2];
@@ -237,13 +238,13 @@ void dumpbytes(unsigned char *buf, int start, int end, int offset)
 
 struct patch_entry {
     struct patch_entry *next;
-    u_int32_t addr;
-    u_int32_t len;
-    u_int8_t *data;
+    uint32_t addr;
+    uint32_t len;
+    uint8_t *data;
 };
 
-u_int32_t patch_minaddr=0x0000;
-u_int32_t patch_maxaddr=0xffff;
+uint32_t patch_minaddr=0x0000;
+uint32_t patch_maxaddr=0xffff;
 static struct patch_entry *patch_head;
 
 void patch_init(void)
@@ -262,7 +263,7 @@ void patch_init(void)
 }
 
 
-int patch_set(u_int8_t *data, u_int32_t len, u_int32_t addr)
+int patch_set(uint8_t *data, uint32_t len, uint32_t addr)
 {
     if (addr < patch_minaddr || (addr+len) >= patch_maxaddr)
 	return -1;	
@@ -281,7 +282,7 @@ int patch_get(int flag)
  *
  * SYNOPSIS
  *   crc = dowcrc (data, length, crc)
- *   u_int8_t dowcrc (u_int8_t *, int, u_int8_t)
+ *   uint8_t dowcrc (uint8_t *, int, uint8_t)
  *
  * DESCRIPTION
  *   Calculate the dowcrc of the data (works with little endian)
@@ -298,7 +299,7 @@ int patch_get(int flag)
  *   none
  *
  ******/
-u_int8_t dowcrc(u_int8_t *data, int length, u_int8_t crc)
+uint8_t dowcrc(uint8_t *data, int length, uint8_t crc)
 {
     int i,j;
     for (i=0; i<length; i++) {

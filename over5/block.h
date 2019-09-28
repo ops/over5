@@ -8,6 +8,8 @@
 **
 ******/
 
+#include <stdint.h>
+
 /* bl_block.c */
 
 #define BLERR_OK        0
