@@ -92,7 +92,7 @@ OBJS 	=	bl_block.o\
 		rdargs.o\
 		util.o
 
-TARGET	=	over5
+TARGET	=	over5@EXEEXT@
 
 $(TARGET): $(OBJS) $(HEADERS) Makefile
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $(TARGET) $(OBJS) $(LDFLAGS) $(LIBS)
